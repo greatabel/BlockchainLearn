@@ -7,7 +7,12 @@ from termcolor import colored
 class TradingPeople(Thread):
     def __init__(self, name):
         Thread.__init__(self)
-        self.message = "I'm " + name
+        mesage = "I'm " + name
+        if name  == "alice":
+            mesage += " I have medicines, I need tools. \n"
+        elif name == "bob":
+            mesage += " I have tools, I need medicines. \n"            
+        self.message = mesage
 
     def print_message(self):
         print(self.message)
