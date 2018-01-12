@@ -1,6 +1,7 @@
 from threading import Thread
 
 from time import sleep
+from termcolor import colored
 
 
 class TradingPeople(Thread):
@@ -12,19 +13,23 @@ class TradingPeople(Thread):
         print(self.message)
 
     def run(self):
-        print("Thread starting\n")
+        print("Trading thread starting\n")
         x = 0 
         while( x < 10):
             self.print_message()
             sleep(1)
             x += 1
-        print("Thread Ended\n")
+        print("Trading thread Ended\n")
 
-print("Main Process start")
+def main():
+    print(colored("Main Process start", "red"), "#" * 10)
 
-alice = TradingPeople("alice")
-alice.start()
-bob = TradingPeople("bob")
-bob.start()
+    alice = TradingPeople("alice")
+    alice.start()
+    bob = TradingPeople("bob")
+    bob.start()
 
-print("Main Process end.")
+    print(colored("Main Process end", "blue"), "*" * 10)
+
+if __name__ == "__main__":
+    main()
