@@ -5,6 +5,13 @@ import random
 import operator
 from termcolor import colored
 
+# 1. 可以无限增加的巨型账本——每个区块可以视作这个账本的一页，
+#    每增加一个区块，账本就多了一页，这一页中可能会包含一条或多条记录信息；
+# 2. 加密且有顺序的账本——账目信息会被打包成一个区块并加密，同时盖上时间戳，
+#    一个个区块按时间戳顺序链接形成一个总账本；
+# 3. 去中心化的账本——由网内用户共同维护的，它是去中心化的。
+
+
 def show(s,color='green'):
     print(colored(s, color, attrs=['reverse', 'blink']), now_time())
 
