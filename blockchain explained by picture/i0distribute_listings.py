@@ -11,7 +11,7 @@ from termcolor import colored
 #    一个个区块按时间戳顺序链接形成一个总账本；
 # 3. 去中心化的账本——由网内用户共同维护的，它是去中心化的。
 
-
+# 暂时模拟第1个要求，有空模拟其他的
 def show(s,color='green'):
     print(colored(s, color, attrs=['reverse', 'blink']), now_time())
 
@@ -35,11 +35,15 @@ def consumer():
                 notebook.append(listings[using_one])
                 show(notebook, "cyan")
 
+def mining():
+    time.sleep(random.random() * 10)
+    item = random.randint(0, 100)
+    return item
+
 def producer():
     while True:
         global listings
-        time.sleep(1.5)
-        item = random.randint(0, 100)
+        item = mining()
         myname = threading.currentThread().getName()
         listings[myname] =  item
         print ("producer " + myname + " notify : producted item number %s" %item)
