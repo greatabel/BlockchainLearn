@@ -19,15 +19,15 @@ def now_time():
     return datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")
 
 semaphore = threading.Semaphore(0)
-threshold = 5
+threshold = 0.5
 
 listings = {}
 notebook = []
 def consumer():
     print("consumer is waiting")
-    while True:
+    while threading.activeCount() > 1:
         semaphore.acquire()
-        if len(listings) > threshold:
+        if len(listings) > threshold * threading.activeCount():
             using_one = max(listings, key=listings.get)
             if listings[using_one] not in notebook:
                 print("among the %s" %listings)
@@ -41,13 +41,12 @@ def mining():
     return item
 
 def producer():
-    while True:
-        global listings
-        item = mining()
-        myname = threading.currentThread().getName()
-        listings[myname] =  item
-        print ("producer " + myname + " notify : producted item number %s" %item)
-        semaphore.release()
+    global listings
+    item = mining()
+    myname = threading.currentThread().getName()
+    listings[myname] =  item
+    print ("producer " + myname + " notify : producted item number %s" %item)
+    semaphore.release()
 
 if __name__ == '__main__':
     minerThreads = []
