@@ -9,8 +9,7 @@ def sha(pw,salt):
     return hashlib.sha256(pw_bytes + salt_bytes).hexdigest() 
 
 def add_validation_to_sn(source, salt='1@2#3%4^'):
-    sha_str = sha(source, salt)
-    
+    sha_str = sha(source, salt)    
     return sha_str 
 
 source = 'py创世模块demo开始了'
