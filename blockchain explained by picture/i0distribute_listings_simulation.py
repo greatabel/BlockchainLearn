@@ -27,6 +27,8 @@ def consumer():
     print("consumer is waiting")
     while threading.activeCount() > 1:
         semaphore.acquire()
+        print('consumer lock it, when threading.activeCount()= ' + str(threading.activeCount())
+                + ' len(listings)=' + str(len(listings)))
         if len(listings) > threshold * threading.activeCount():
             using_one = max(listings, key=listings.get)
             if listings[using_one] not in notebook:
@@ -48,19 +50,30 @@ def producer():
     print ("producer " + myname + " notify : producted item number %s" %item)
     semaphore.release()
 
-if __name__ == '__main__':
-    minerThreads = []
-    for i in range(1, 11):
-        minerThreads.append(threading.Thread(target=producer))
+    time.sleep(random.random() * 10)
+    del listings[myname]
+    print ("producer " + myname + " is gone.")
 
+if __name__ == '__main__':
     block_scheduler = threading.Thread(target=consumer)
     block_scheduler.start()
-    for miner in minerThreads:
-        miner.start()
+    while True:
+        minerThreads = []
+        minerNum = random.randint(0, 50)
+        for i in range(1, minerNum):
+            minerThreads.append(threading.Thread(target=producer))
 
-    
-    for miner in minerThreads:
-        miner.join()
+
+        for miner in minerThreads:
+            miner.start()
+
+        
+        for miner in minerThreads:
+            miner.join()
+        
+        show('- >'*20, 'magenta')
+        minerThreads = []
     block_scheduler.join()
+
 
     print ("main program terminated")
