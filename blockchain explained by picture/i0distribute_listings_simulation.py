@@ -13,7 +13,10 @@ from termcolor import colored
 
 # 暂时模拟第1个要求大概，有空模拟其他的
 
-age_of_this_universe = 60  # unit:seconds
+age_of_this_universe = 1024  # unit:seconds
+
+semaphore = threading.Semaphore(0)
+threshold = 0.5
 
 def show(s,color='green'):
     print(colored(s, color, attrs=['reverse', 'blink']), now_time())
@@ -21,8 +24,6 @@ def show(s,color='green'):
 def now_time():
     return datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")
 
-semaphore = threading.Semaphore(0)
-threshold = 0.5
 
 listings = {}
 notebook = []
@@ -31,8 +32,8 @@ def consumer():
     print(myname + " consumer is waiting")
     while threading.activeCount() > 2:
         semaphore.acquire()
-        print('consumer lock it, when threading.activeCount()= ' + str(threading.activeCount())
-                + ' len(listings)=' + str(len(listings)))
+        # print('consumer lock it, when threading.activeCount()= ' + str(threading.activeCount())
+        #         + ' len(listings)=' + str(len(listings)))
         if len(listings) > threshold * threading.activeCount():
             using_one = max(listings, key=listings.get)
             if listings[using_one] not in notebook:
