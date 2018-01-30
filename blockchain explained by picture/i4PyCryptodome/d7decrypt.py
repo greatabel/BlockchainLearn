@@ -1,6 +1,7 @@
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import AES, PKCS1_OAEP
 
+# https://pycryptodome.readthedocs.io/en/latest/src/examples.html#encrypt-data-with-aes
 file_in = open("d6_encrypted_data.bin", "rb")
 
 private_key = RSA.import_key(open("d3private.pem").read())
