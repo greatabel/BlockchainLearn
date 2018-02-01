@@ -18,6 +18,9 @@ class Block:
     def __lt__(self, other):
         return self.id < other.id
 
+    def __str__(self):
+        return str(self.id)
+
 class Node:
     def __init__(self, val):
         self.left = None
@@ -57,7 +60,7 @@ class Tree:
     def _print_tree(self, node):
         if node is not None:            
             self._print_tree(node.left)
-            print(str(node.val.id), node.val.digest ,end='')          
+            print(str(node.val) ,end='')          
             self._print_tree(node.right)
         else:
             print("\t")
