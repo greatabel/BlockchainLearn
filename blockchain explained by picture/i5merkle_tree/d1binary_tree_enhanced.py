@@ -11,7 +11,6 @@ def id_generator(size=6):
 @functools.total_ordering
 class Block:
     def __init__(self):
-
         self.id =  random.randint(0, 100)
         self.data = id_generator(size=20)
         self.digest = self.data[0:5]
@@ -66,15 +65,9 @@ class Tree:
 
 def main():
     tree = Tree()
-    tree.add_node(Block())
-    tree.add_node(Block())
-    tree.add_node(Block())
-    tree.add_node(Block())
-    tree.add_node(Block())
-
+    for i in range(10):
+        tree.add_node(Block())
     tree.print_tree()
-
-
 
 
 if __name__ == "__main__":
