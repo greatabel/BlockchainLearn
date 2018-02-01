@@ -6,12 +6,17 @@ digits = string.digits
 
 def id_generator(size=6, chars=characters ):
     return ''.join(random.choice(chars) for _ in range(size))
+import functools
 
+@functools.total_ordering
 class Block:
     def __init__(self):
-        self.id =  id_generator(size=3, chars=digits)
+        self.id =  random.randint(0, 100)
         self.data = id_generator(size=20, chars=characters)
         self.digest = self.data[0:5]
+
+    def __lt__(self, other):
+        return self.id < other.id
 
 class Node:
     def __init__(self, val):
@@ -52,7 +57,7 @@ class Tree:
     def _print_tree(self, node):
         if node is not None:            
             self._print_tree(node.left)
-            print(str(node.val), end='')          
+            print(str(node.val.id), node.val.digest ,end='')          
             self._print_tree(node.right)
         else:
             print("\t")
@@ -60,14 +65,14 @@ class Tree:
 
 def main():
     tree = Tree()
-    tree.add_node(5)
-    tree.add_node(10)
-    tree.add_node(0)
-    tree.add_node(16)
-    tree.add_node(2)
+    tree.add_node(Block())
+    tree.add_node(Block())
+    tree.add_node(Block())
+    tree.add_node(Block())
+    tree.add_node(Block())
+
     tree.print_tree()
-    block = Block()
-    print(block.id, block.data, block.digest)
+
 
 
 
