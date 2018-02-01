@@ -1,18 +1,19 @@
 import string
 import random
-
-characters = string.ascii_uppercase + string.digits + string.ascii_lowercase 
-digits = string.digits
-
-def id_generator(size=6, chars=characters ):
-    return ''.join(random.choice(chars) for _ in range(size))
 import functools
+
+
+def id_generator(size=6):
+    chars = string.ascii_uppercase + string.digits + string.ascii_lowercase 
+    return ''.join(random.choice(chars) for _ in range(size))
+
 
 @functools.total_ordering
 class Block:
     def __init__(self):
+
         self.id =  random.randint(0, 100)
-        self.data = id_generator(size=20, chars=characters)
+        self.data = id_generator(size=20)
         self.digest = self.data[0:5]
 
     def __lt__(self, other):
