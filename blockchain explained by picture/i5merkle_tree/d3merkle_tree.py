@@ -1,10 +1,30 @@
 import hashlib
 
+# http://blog.csdn.net/zhangce315/article/details/77779426
+
 class MerkleNode:
     def __init__(self, left=None, right=None, data=None):
         self.left = left
         self.right = right
         self.data = data
+
+def dfs(root):
+    if  root != None:
+        print("data:",root.data)
+        dfs(root.left)
+        dfs(root.right)
+
+def bfs(root):
+    print('start bfs')
+    queue = []
+    queue.append(root)
+    while(len(queue)>0):
+        e = queue.pop(0)
+        print(e.data)
+        if e.left != None:
+            queue.append(e.left)
+        if e.right != None:
+            queue.append(e.right)
 
 
 def createTree(nodes):
@@ -24,6 +44,12 @@ def createTree(nodes):
             sha.update(d1 + d2)
             newdata = sha.hexdigest()
             print(d1, d2 , ' newdata=', newdata)
+            node = MerkleNode(left=k[0],right=k[1],data=newdata)
+            secondary.append(node)
+        if len(secondary) == 1:
+            return secondary[0]
+        else:
+            return createTree(secondary)
 
 if __name__ == "__main__":
     blocks = ['A','B','C','D','E']
@@ -37,3 +63,4 @@ if __name__ == "__main__":
         print(e + ' 叶子节点 ' + d)
     print('-'*30)
     root = createTree(nodes)
+    bfs(root)
