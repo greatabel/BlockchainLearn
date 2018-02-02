@@ -38,13 +38,15 @@ class LinkedList:
         self.current_node = None
 
     def add_node(self, data):
-        if not isinstance(data, Block):
+        if not isinstance(data, Block) and  not isinstance(data, NewBlock):
             print(data, "属于", type(data), "我们不是一个组织系统的，你去别地方挖煤吧！")
-        else:
-            new_node = Node()
-            new_node.data = data
-            new_node.next = self.current_node
-            self.current_node = new_node
+            return 
+        elif isinstance(data, NewBlock):
+            print(data, "属于我们接受的软分叉，过来一起挖吧！")
+        new_node = Node()
+        new_node.data = data
+        new_node.next = self.current_node
+        self.current_node = new_node
 
     def show(self):
         node = self.current_node
@@ -59,4 +61,5 @@ if __name__ == "__main__":
         mylist.add_node(Block())
     for i in range(0, 5):
         mylist.add_node(NewBlock())
+    print('#' * 20)
     mylist.show()
