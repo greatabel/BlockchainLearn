@@ -11,12 +11,12 @@ from termcolor import colored
 timelist = [1, 2]
 
 
-def show(s,color='green'):
+def show(s, color='green'):
     print(colored(s, color, attrs=['reverse', 'blink']))
 
 
 def id_generator(size=6):
-    chars = string.ascii_uppercase + string.digits + string.ascii_lowercase 
+    chars = string.ascii_uppercase + string.digits + string.ascii_lowercase
     return ''.join(random.choice(chars) for _ in range(size))
 
 
@@ -26,13 +26,14 @@ def turn():
     try_count = 0
     while True:
         block_prefix = id_generator()
-        try_count += 1        
+        try_count += 1
         if block_prefix.startswith("000"):
             end = time.time()
             span = round(end - start, 2)
-            print(block_prefix + ' time= ' + str(span) +' '+ str(try_count))
+            print(block_prefix + ' time= ' + str(span) + ' ' + str(try_count))
             timelist.append(span)
             break
+
 
 def draw_chart():
     timelist.sort()
@@ -47,8 +48,9 @@ def main():
     for i in range(10**3):
         turn()
     show(timelist)
-    show('POW 时间分布图:', color='red')  
+    show('POW 时间分布图:', color='red')
     draw_chart()
+
 
 if __name__ == "__main__":
     main()
