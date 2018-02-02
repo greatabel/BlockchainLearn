@@ -8,7 +8,7 @@ from matplotlib import pyplot as plt
 from termcolor import colored
 
 
-timelist = [1, 2]
+timelist = []
 
 
 def show(s, color='green'):
@@ -45,7 +45,7 @@ def draw_chart():
 
 
 def main():
-    for i in range(10**3):
+    for i in range(10**2):
         turn()
     show(timelist)
     show('POW 时间分布图:', color='red')
