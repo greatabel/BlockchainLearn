@@ -27,6 +27,15 @@ class NewBlock:
     def __str__(self):
         return str(self.id)
 
+class SomeFraudBlock:
+    def __init__(self):
+        self.id = random.randint(0, 100)
+        self.data = id_generator(size=40)
+        self.digest = self.data[0:10]
+
+    def __str__(self):
+        return str(self.id)
+
 class Node:
     def __init__(self):
         self.data = None
@@ -61,5 +70,8 @@ if __name__ == "__main__":
         mylist.add_node(Block())
     for i in range(0, 5):
         mylist.add_node(NewBlock())
+    for i in range(0, 5):
+        mylist.add_node(SomeFraudBlock())
+
     print('#' * 20)
     mylist.show()
