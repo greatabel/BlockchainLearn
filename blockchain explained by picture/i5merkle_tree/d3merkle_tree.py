@@ -63,4 +63,7 @@ if __name__ == "__main__":
         print(e + ' 叶子节点 ' + d)
     print('-'*30)
     root = createTree(nodes)
+    
     bfs(root)
+    print('#'*30)
+    dfs(root)
