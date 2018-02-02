@@ -17,6 +17,7 @@ age_of_this_universe = 1024  # unit:seconds
 
 semaphore = threading.Semaphore(0)
 threshold = 0.5
+DPoS_Num = 5
 
 def show(s,color='green'):
     print(colored(s, color, attrs=['reverse', 'blink']), now_time())
@@ -35,7 +36,8 @@ def consumer():
         semaphore.acquire()
         # print('consumer lock it, when threading.activeCount()= ' + str(threading.activeCount())
         #         + ' len(listings)=' + str(len(listings)))
-        if len(listings) > threshold * threading.activeCount():
+
+        if len(listings) > threshold * DPoS_Num:
             using_one = max(listings, key=listings.get)
             if listings[using_one] not in notebook:
                 print("among the %s" %listings)
@@ -57,12 +59,16 @@ def producer():
     item = mining()
     myname = threading.currentThread().getName()
     listings[myname] =  item
-    print ("producer " + myname + " notify : producted item number %s" %item)
+    print ("DPoS producer " + myname + " notify : producted item number %s" %item)
     semaphore.release()
 
     time.sleep(random.random() * 10)
     del listings[myname]
-    print ("producer " + myname + " is gone.")
+    print ("DPoS producer " + myname + " is gone.")
+
+def audience_watching_playing(i):
+    print("@-@ audience are watching playing and voting %i\n" %i)
+    return
 
 def main():
     start = time.time()
@@ -71,8 +77,10 @@ def main():
     global minerThreads 
     minerThreads = []
     while True:        
-        minerNum = random.randint(0, 50)
-        for i in range(1, minerNum):
+        # minerNum = random.randint(0, 10)
+        # minerNum = 5
+        print("我们是代表，代理验证和记账")
+        for i in range(1, DPoS_Num):
             minerThreads.append(threading.Thread(target=producer))
 
         for miner in minerThreads:
@@ -89,6 +97,13 @@ def main():
             print('Bang!')
             semaphore.release()
             break
+
+        threads = []
+        for i in range(random.randint(0, 50)):
+            t = threading.Thread(target=audience_watching_playing, args=(i,))
+            threads.append(t)
+            t.start()
+            t.join()
 
     block_scheduler.join()
 

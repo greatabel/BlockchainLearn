@@ -21,7 +21,6 @@ def id_generator(size=6):
 
 
 def turn():
-    global time_count_dic
     start = time.time()
     try_count = 0
     while True:
