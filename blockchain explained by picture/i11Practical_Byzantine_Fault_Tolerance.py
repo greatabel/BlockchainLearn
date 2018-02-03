@@ -11,6 +11,17 @@ from termcolor import colored
 def show(s,color='green'):
     return colored(s, color, attrs=['reverse', 'blink'])
 
+def PBFT(results):
+    print(results)
+    # PBFT算法的核心理论是n>=3f+1
+    max_key = max(results, key=results.get)
+    max_value = results[max_key]
+    n = sum(results.values())
+    if max_value >= (n - 1) * 2 / 3:
+        print("PBFT 决定接受方案:", max_key)
+    else:
+        print("PBFT 无法满足做出决策条件")
+
 class Starter(Thread):
     def __init__(self, queue, r_queue):
         Thread.__init__(self)
@@ -35,8 +46,8 @@ class Starter(Thread):
             else:
                 results[r_item] = 1
             self.response_queue.task_done()
-        # PBFT算法的核心理论是n>=3f+1
-        print(results)
+
+        PBFT(results)
 
 
 
