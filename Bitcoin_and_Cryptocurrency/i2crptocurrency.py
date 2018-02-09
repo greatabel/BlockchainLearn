@@ -6,7 +6,7 @@ from Crypto import Random
 
 # sender can create the signatue of a message using their private key
 message = b'To be signed'
-key = RSA.importKey(open('../blockchain explained by picture/i4PyCryptodome/d3private.pem').read())
+key = RSA.importKey(open('../01blockchain explained by picture/i4PyCryptodome/d3private.pem').read())
 h = SHA256.new(message)
 signature = pss.new(key).sign(h)
 
@@ -14,7 +14,7 @@ print(signature, type(signature))
 
 print('-' * 20)
 
-key = RSA.importKey(open('../blockchain explained by picture/i4PyCryptodome/d3public.pem').read())
+key = RSA.importKey(open('../01blockchain explained by picture/i4PyCryptodome/d3public.pem').read())
 h = SHA256.new(message)
 verifier = pss.new(key)
 try:
