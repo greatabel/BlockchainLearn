@@ -4,19 +4,24 @@
 
 import string
 import random
- 
+
 
 def id_generator(size=10):
     chars = string.ascii_uppercase + string.digits + string.ascii_lowercase
-    return ''.join(random.choice(chars) for _ in range(size))
+    return "".join(random.choice(chars) for _ in range(size))
 
 
-def main():
+def generate_tickes():
     given_away_tickets = []
     for i in range(3):
         given_away_tickets.append(id_generator())
     for ticket in given_away_tickets:
-        print(ticket, ' 拿着这个来我这里换1$')
+        print(ticket, " 拿着这个来我这里换1$")
+    return given_away_tickets
+
+
+def main():
+    ticktes = generate_tickes()
 
 
 if __name__ == "__main__":
