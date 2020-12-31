@@ -18,7 +18,6 @@ def id_generator(size=10):
 
 
 def generate_tickets():
-    
     for i in range(ticket_range):
         given_away_tickets.append(id_generator())
     for ticket in given_away_tickets:
@@ -43,6 +42,7 @@ def whether_can_use_ticket(ticket):
 def main():
     ticktes = generate_tickets()
     print('\n')
+    print('double spending')
     copy_tickets = bad_guy_do_copy(ticktes[randrange(ticket_range)])
     print('\n')
     for t in copy_tickets:
