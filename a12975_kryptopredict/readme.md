@@ -1,6 +1,16 @@
 检测部分推荐部署ubuntu或者其他linux，或者osx等类unix系统
 其他系统没有经过充分测试
 
+###############
+
+总体而言：
+i0SGScrapy 是所有的twitter/quora下载爬虫、轮询的工程
+i1data_explore 是进行网络分析和数据探索的工程
+i2sentiment_analysis 主要是进行情感分析模型训练和测试的工程
+docs 是文档和报告
+
+###############
+
 1.
 安装python3.6 以上版本
 
@@ -26,17 +36,24 @@ pip3 install --upgrade -r requirements.txt
 
 
 5.
+启动不同terminal（命令行）
+cd 进入  i0SGScrapy
+运行：python3 quora_main.py
+
+cd 进入 i0SGScrapy/twitter_scrapy
+运行： python3 i0my_tw_downloader.py
+
 在命令行下，（进入虚拟环境， 如果设置过虚拟环境）
-运行：jupyter notebook i1deep-learning-for-sentiment-analysis.ipynb 
+cd 进入 i2sentiment_analysis
+运行：jupyter notebook i2deep-learning-for-sentiment-analysis.ipynb
 
 
 
 6.
-另外开一个命令行，进入i3sentiment_predict_web
+另外开一个命令行，进入i2sentiment_analysis/i3sentiment_predict_web
 进入虚拟环境
 执行：app.py
 
-7.
-访问：
+可以访问情感模型的web调用模式访问：
 http://127.0.0.1:5000/home
 
