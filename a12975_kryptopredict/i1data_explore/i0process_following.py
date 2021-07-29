@@ -42,9 +42,11 @@ p = re.compile(r"@([^\s:]+)")
 # ---------- ------ ------------------------------ ------------------
 # path_to_file = 'twitter_data/elonmusk_following.txt'
 path_to_file = "twitter_data/pualg_follwing.txt"
+# path_to_file = "twitter_data/pualg_follwing_windows.txt"
+
 
 text = ""
-with open(path_to_file) as file_object:  # this is a safe way of opening files
+with open(path_to_file,'r', encoding='UTF-8') as file_object:  # this is a safe way of opening files
     for line in file_object:
         text += line
 
