@@ -1,6 +1,6 @@
 import datetime, pandas as pd, warnings
 from time import strftime, localtime
-from twint.tweet import Tweet_formats
+from i1forked_altered_lib.tweet import Tweet_formats
 
 Tweets_df = None
 Follow_df = None

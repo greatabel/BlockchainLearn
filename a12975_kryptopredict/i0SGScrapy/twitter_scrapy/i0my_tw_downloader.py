@@ -1,4 +1,4 @@
-import i1forked_altered_lib as twint
+import i1forked_altered_lib as mytwint
 import schedule
 import time
 
@@ -6,7 +6,7 @@ import time
 # you can change the name of each "job" after "def" if you'd like.
 def jobone():
     print("Fetching Tweets")
-    c = twint.Config()
+    c = mytwint.Config()
     # choose username (optional)
     # c.Username = ""
     # choose search term (optional)
@@ -21,7 +21,7 @@ def jobone():
 
     # change the name of the csv file
     c.Output = "../downloads/#btc.csv"
-    twint.run.Search(c)
+    mytwint.run.Search(c)
 
 
 

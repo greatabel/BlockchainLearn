@@ -12,7 +12,6 @@ geopy
 fake-useragent
 googletransx
 termcolor
-pandas
 jellyfish
 Flask==1.1.2
 Flask-Script
@@ -25,8 +24,8 @@ numpy
 Pillow
 Werkzeug
 Flask-Docs
+twint
 termcolor
-pandas
 tensorflow
 torch>=0.4.0
 torchvision>=0.2.1
