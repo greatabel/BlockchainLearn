@@ -20,15 +20,14 @@ Click
 itsdangerous
 Jinja2
 MarkupSafe
-numpy
+numpy==1.18
 Pillow
 Werkzeug
 Flask-Docs
 termcolor
-tensorflow
+tensorflow==2.2.0
 torch>=0.4.0
 torchvision>=0.2.1
-numpy
 nltk
 keras
 scikit-learn

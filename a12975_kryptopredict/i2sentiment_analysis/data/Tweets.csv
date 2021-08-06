@@ -1,5 +1,5 @@
 tweet_id,airline_sentiment,airline_sentiment_confidence,negativereason,negativereason_confidence,airline,airline_sentiment_gold,name,negativereason_gold,retweet_count,text,tweet_coord,tweet_created,tweet_location,user_timezone
-570306133677760513,neutral,1.0,,,Virgin America,,cairdin,,0,@VirginAmerica What @dhepburn said.,,2015-02-24 11:35:52 -0800,,Eastern Time (US & Canada)
+570306133677760513,neutral,1.0,,,Virgin America,,cairdin,,0,@VirginAmerica What @dhepburn said. btc is working,,2015-02-24 11:35:52 -0800,,Eastern Time (US & Canada)
 570301130888122368,positive,0.3486,,0.0,Virgin America,,jnardino,,0,@VirginAmerica plus you've added commercials to the experience... tacky.,,2015-02-24 11:15:59 -0800,,Pacific Time (US & Canada)
 570301083672813571,neutral,0.6837,,,Virgin America,,yvonnalynn,,0,@VirginAmerica I didn't today... Must mean I need to take another trip!,,2015-02-24 11:15:48 -0800,Lets Play,Central Time (US & Canada)
 570301031407624196,negative,1.0,Bad Flight,0.7033,Virgin America,,jnardino,,0,"@VirginAmerica it's really aggressive to blast obnoxious ""entertainment"" in your guests' faces &amp; they have little recourse",,2015-02-24 11:15:36 -0800,,Pacific Time (US & Canada)
@@ -8904,7 +8904,7 @@ Damaged Luggage",0,@JetBlue I am heading to JFK now just on principle alone to d
 567871911960645632,negative,0.6252,Customer Service Issue,0.3307,Delta,,Trufflebaby2,,0,@JetBlue now when I call it's still at the warehouse and might be going out tonight,,2015-02-17 18:23:09 -0800,,
 567871783107452930,negative,1.0,Late Flight,0.6675,Delta,,Trufflebaby2,,0,@JetBlue they couldn't do it sun then it was supposed to be mon after 6pm then today from 11 to 3 then from 6 to 8,,2015-02-17 18:22:38 -0800,,
 567869962800472064,negative,1.0,Bad Flight,1.0,Delta,,Mister_17_5,,0,@JetBlue flight from DCA to BOS has no heat #OhNo #BundleUp #Leastthebeverageswillbecold,,2015-02-17 18:15:24 -0800,,Eastern Time (US & Canada)
-567868027376517121,neutral,1.0,,,Delta,,PaulRivera88,,0,@JetBlue yep it's for tomorrow.,,2015-02-17 18:07:42 -0800,,Eastern Time (US & Canada)
+567868027376517121,neutral,1.0,,,Delta,,PaulRivera88,,0,I'll hit crypto millionaire status a bit before $100k BTC.,,2015-02-17 18:07:42 -0800,,Eastern Time (US & Canada)
 567867483622748160,negative,1.0,Customer Service Issue,0.654,Delta,,Analystdoc,,0,“@JetBlue: @Analystdoc Unfortunately that's not an available option with our current system. Sorry guys. That's a certain #fail Fix it plz.,,2015-02-17 18:05:33 -0800,"Greenwich, CT",
 567864793404555264,negative,1.0,Customer Service Issue,0.66,Delta,,mellamommy,,0,"@JetBlue received horrible customer service at LAX on 2/11. Reservation Cancelled Flighted without notification, despite having confirmation number.",,2015-02-17 17:54:51 -0800,,
 567864588521381888,negative,1.0,Cancelled Flight,1.0,Delta,,knfitzpa,,0,"@JetBlue flight was Cancelled Flighted. Do I need to file a claim for the $50 credit I'm entitled to per yr bill of rights, or will it just be issued?",,2015-02-17 17:54:02 -0800,,Eastern Time (US & Canada)
