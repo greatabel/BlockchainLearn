@@ -10,17 +10,17 @@ def jobone():
     # choose username (optional)
     # c.Username = ""
     # choose search term (optional)
-    c.Search = "btc"
+    c.Search = "eth"
     # c.Search = "#eth"
     # choose beginning time (narrow results)
     c.Since = "2021-01-01"
     # set limit on total tweets
-    c.Limit = 100
+    c.Limit = 1000
     # no idea, but makes the csv format properly
     c.Store_csv = True
 
     # change the name of the csv file
-    c.Output = "../downloads/#btc.csv"
+    c.Output = "../downloads/#eth.csv"
     mytwint.run.Search(c)
 
 
