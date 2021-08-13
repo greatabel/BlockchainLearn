@@ -1,6 +1,5 @@
 import numpy as np
 
-
 from tensorflow.keras import models
 import tensorflow as tf
 
@@ -15,7 +14,7 @@ def flow_predict(i):
     mymodel = tf.keras.models.load_model("drop_model.h5")
     with open("test.pkl", "rb") as f:
         MyX_test_oh = pickle.load(f)
-
+    print(i, MyX_test_oh[i],len(MyX_test_oh[i]), '#'*20)
     # 真实数据预测
     q = mymodel.predict(
         np.array(
@@ -25,8 +24,9 @@ def flow_predict(i):
         )
     )
     result = np.around(q, decimals=3)
+    print('result=', result)
     return result
 
 
 if __name__ == "__main__":
-    flow_predict(["Tuesday", "13:35", "placeid0", "down"])
+    flow_predict(1)
