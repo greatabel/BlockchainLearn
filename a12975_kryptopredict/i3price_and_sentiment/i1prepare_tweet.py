@@ -2,22 +2,81 @@ import pandas as pd
 from csv_operation import csv_reader
 from sentiment import anlaysis
 
-
-# twint -s "senkaku islands" --since 2020-04-01  -o senkaku.csv --csv
-# twint -s "south China sea" --since 2021-06-01  -o southchinasea.csv --csv
+# 检查数据集是否正常
 data2020 = csv_reader("i0btc_tweet.csv", "data")
 print(data2020[0], "#" * 10, data2020[1], "#" * 10, " \n", data2020[2])
 
 
 
 print("-" * 10, "tweets:")
-print(data2020[1][10], "\n", "#" * 10, "\n")
+print(data2020[1][3],'data2020[1][10]=',data2020[1][10], "\n", "@" * 10)
 
 
-print('start','*-* '*10)
-print(type(data2020))
+print('start','*-* *-* *-* *-* *-* '*10)
 
-print('end','*-* '*10)
+# 处理基于天的热度
+from collections import defaultdict
+
+appearances = defaultdict(int)
+
+for curr in data2020:
+	if len(curr) >= 3 and '2021' in curr[3]:
+		appearances[curr[3]] += 1
+print(appearances)
+
+# 持久化为其他程序做处理
+import pickle
+with open('hot.pickle', 'wb') as handle:
+	pickle.dump(appearances, handle)
+
+with open('hot.pickle', 'rb') as handle:
+	b = pickle.load(handle)
+# print('b=', b)
+
+sentiment_dict = {}
+for k, v in appearances.items():
+	pick_twlist = [x[10] for x in data2020 if len(x)>= 3 and x[3] == k]
+	total_sentiment = 0
+	num_positive = 0
+	num_neural = 0
+	num_nagtive = 0
+	split = 10
+	# print(k, '#'*10, pick_twlist)
+	for tw in pick_twlist[:split]:
+	    text = tw
+
+	    # print(text, "\n@@@username=", username, "\n")
+	    words, sentiment_tw = anlaysis(text)
+	    print(sentiment_tw)
+	    total_sentiment += sentiment_tw
+	    if sentiment_tw < 0:
+	        num_nagtive += 1
+	    if sentiment_tw == 0:
+	        num_neural += 1
+	    if sentiment_tw > 0:
+	        num_positive += 1
+	    # print('words=', words)
+
+
+	print("tatal sentiment polarity:", total_sentiment)
+	print("average sentiment polarity:", total_sentiment / len(pick_twlist))
+	print(
+	    "number of (positive VS neural VS nagtive):",
+	    num_positive * split,
+	    num_neural * split,
+	    num_nagtive * split,
+	)
+	s = num_positive * split - num_nagtive * split
+	sentiment_dict[k] = s
+
+print('@'*10, sentiment_dict)
+with open('sentiment_dict.pickle', 'wb') as handle:
+	pickle.dump(sentiment_dict, handle)
+
+print('end','*-* *-* *-* *-* *-* '*10)
+
+
+# # 进行可视化分析
 
 js_txt = '''
 
