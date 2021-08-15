@@ -5,19 +5,23 @@ from keras.preprocessing.text import Tokenizer
 
 
 NB_WORDS = 10000
-tk = Tokenizer(num_words=NB_WORDS,
-               filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',
-               lower=True,
-               split=" ")
+tk = Tokenizer(
+    num_words=NB_WORDS,
+    filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',
+    lower=True,
+    split=" ",
+)
 
-def one_hot_seq(seqs, nb_features = NB_WORDS):
+
+def one_hot_seq(seqs, nb_features=NB_WORDS):
     ohs = np.zeros((len(seqs), nb_features))
     for i, s in enumerate(seqs):
-        ohs[i, s] = 1.
+        ohs[i, s] = 1.0
     return ohs
 
+
 def anlaysis(text):
-    '''
+    """
     mymodel = tf.keras.models.load_model("../i2sentiment_analysis/drop_model.h5")
     mytext = tk.texts_to_sequences(text)
     mytext = one_hot_seq(mytext)
@@ -31,11 +35,11 @@ def anlaysis(text):
     )
     result = np.around(q, decimals=3)
     print('result=', result)
-    '''
+    """
 
-    '''
+    """
     下面的方式更快
-    '''
+    """
 
     total = 0
     blob = TextBlob(text)
