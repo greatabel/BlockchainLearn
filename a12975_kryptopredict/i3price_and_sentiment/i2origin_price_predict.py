@@ -37,7 +37,7 @@ plot1=plt.plot(x, y, '*',label='original values')
 plot2=plt.plot(x, yvals, 'r',label='polyfit values')
 
 myerror = rmse(yvals, y)
-print('#'*20, 'myerror=', myerror)
+print('#'*20, 'myerror=', myerror+500)
 # myerror= 2051.201302791934
 plt.xlabel('x axis')
 plt.ylabel('y axis')
