@@ -151,8 +151,10 @@ for d in degree:
     )
     clf.fit(x[:, np.newaxis], y)
     y_test = clf.predict(x[:, np.newaxis])
+    print('y_test=>', y_test, '\n')
     print(" start ->" * 10, d)
     print("coef=> ",clf.named_steps["linear"].coef_)
+
     print(" end ->" * 10, d)
     print(
         "###rmse=%.2f, R2=%.2f, R22=%.2f, clf.score=%.2f"
@@ -176,6 +178,7 @@ rmse=34886.10, R2=-54.17, R22=-6.43, clf.score=-54.17
 
 
 '''
+
 plt.grid()
 plt.legend(["1", "2", "3", "100"], loc="upper left")
 plt.show()
