@@ -31,12 +31,13 @@ pip3 install --upgrade -r requirements.txt
 
 
 5.
-运行已经训练好的结果看, 在terminal输入：
-python3 i2visual_and_analysis.py
-查看可视化和规律
+启动3个命令行窗口，在terminal分别输入3个不同的命令：
 
-python3 i3rssi_to_predict.py
-运行后，按ctrl+z终止，查看模拟识别
+python3 i0bob_mock.py
+
+python3 i3app.py
+
+python3 i1alice_mock.py
 
 --------------------------------------------------------
 

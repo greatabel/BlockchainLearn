@@ -10,6 +10,8 @@ alice_private_key = asymmetric.rsa.generate_private_key(
     public_exponent=65537, key_size=4096, backend=default_backend()
 )
 print("alice_private_key generated", alice_private_key, "#" * 20)
+print('\n')
+
 # 假设 Bob 有 Alice 的 PK，因此在 Bob 的共钥中将其保存为 PEM 格式
 alice_key_pem = alice_private_key.public_key().public_bytes(
     encoding=serialization.Encoding.PEM,
@@ -61,14 +63,14 @@ running = True
 
 text = colored(
     f"[Connected to {host} at port {port}]",
-    "green",
+    "red",
     attrs=["reverse", "blink"],
 )
 print(text)
 
 
 while running:
-    # Get prerequisites
+    # 获取先决条件
     PK_bob = retrieve_bobs_pk()
 
     print("********* Alice's dice throw *********")
@@ -94,7 +96,7 @@ while running:
     compute_dice_throw(a1, b1)
 
     print()
-    print("********* Bob's dice throw *********")
+    print("********* Bob's dice🎲 throw *********")
 
     # [a1] Message Com(a,r) received from Bob
     received_data2 = pickle.loads(server.recv(2048))

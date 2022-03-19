@@ -10,6 +10,7 @@ bob_private_key = asymmetric.rsa.generate_private_key(
     public_exponent=65537, key_size=4096, backend=default_backend()
 )
 print("bob_private_key generated:", bob_private_key, "#" * 20)
+print('\n')
 
 # Alice有bob公钥，因此将其以 PEM 格式保存到 Alice 公钥
 bob_key_pem = bob_private_key.public_key().public_bytes(
@@ -63,7 +64,7 @@ running = True
 
 text = colored(
     f"[Server started at {host} on port {port}]",
-    "red",
+    "green",
     attrs=["reverse", "blink"],
 )
 
@@ -76,7 +77,7 @@ while running:
     client_socket, address = server.accept()
     print(f"Connection from {address} has been established...")
 
-    # Get prerequisites
+    # 获取先决条件
     PK_alice = retrieve_alice_pk()
 
     print("********* Alice's dice throw *********")
@@ -111,7 +112,7 @@ while running:
         print("[WARNING] Alice changed her message")
 
     print()
-    print("********* Bob's dice throw *********")
+    print("********* Bob's dice🎲  throw *********")
 
     # [b1] Bob samples random bit b and random 128 bit string and sends Com(a,r)
     b2 = format(random.getrandbits(4), "b")
@@ -135,4 +136,8 @@ while running:
 
     running = False
 
+shared = {"flag": 'finished'}
+fp = open("shared.pkl","wb")
+pickle.dump(shared, fp)
+# --------- share data end -------
 client_socket.close()
