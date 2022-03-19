@@ -2,12 +2,12 @@
 import socket, pickle, random
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization, asymmetric
-from MyCryptoLibrary import MyCryptoLibrary
+from i2mycrypto import MyCryptoLibrary
 
 # Key generation
 bob_private_key = asymmetric.rsa.generate_private_key(
     public_exponent=65537,
-    key_size=2048,
+    key_size=4096,
     backend=default_backend())
 
 # Assuming that Alice has bob's PK, thus saving it as PEM format to Alice's PC.
