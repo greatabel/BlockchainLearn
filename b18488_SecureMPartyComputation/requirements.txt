@@ -4,3 +4,4 @@ pandas
 sklearn
 Flask
 cryptography==36.0.1
+termcolor

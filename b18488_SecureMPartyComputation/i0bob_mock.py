@@ -1,19 +1,21 @@
-""" Bob (localhost) """
 import socket, pickle, random
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization, asymmetric
 from i2mycrypto import MyCryptoLibrary
+from termcolor import colored, cprint
 
-# Key generation
+
+# 密钥生成
 bob_private_key = asymmetric.rsa.generate_private_key(
-    public_exponent=65537,
-    key_size=4096,
-    backend=default_backend())
+    public_exponent=65537, key_size=4096, backend=default_backend()
+)
+print("bob_private_key generated:", bob_private_key, "#" * 20)
 
-# Assuming that Alice has bob's PK, thus saving it as PEM format to Alice's PC.
+# Alice有bob公钥，因此将其以 PEM 格式保存到 Alice 公钥
 bob_key_pem = bob_private_key.public_key().public_bytes(
     encoding=serialization.Encoding.PEM,
-    format=serialization.PublicFormat.SubjectPublicKeyInfo)
+    format=serialization.PublicFormat.SubjectPublicKeyInfo,
+)
 
 with open("PK_bob.pem", "wb") as key:
     key.write(bob_key_pem)
@@ -22,8 +24,8 @@ with open("PK_bob.pem", "wb") as key:
 def retrieve_alice_pk():
     with open("PK_alice.pem", "rb") as pem_file:
         PK = serialization.load_pem_public_key(
-            pem_file.read(),
-            backend=default_backend())
+            pem_file.read(), backend=default_backend()
+        )
         return PK
 
 
@@ -50,14 +52,22 @@ def compute_dice_throw(b, a):
 
 # TCP socket with ipv4
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-host = "127.0.0.1"; port = 6677
+host = "127.0.0.1"
+port = 6677
 address = (host, port)
 server.bind(address)
 
 # Handle connections
 server.listen(2048)
 running = True
-print(f"[Server started at {host} on port {port}]")
+
+text = colored(
+    f"[Server started at {host} on port {port}]",
+    "red",
+    attrs=["reverse", "blink"],
+)
+
+print(text)
 
 # Creating the message to send
 
@@ -126,5 +136,3 @@ while running:
     running = False
 
 client_socket.close()
-
-

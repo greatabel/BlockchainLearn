@@ -5,14 +5,16 @@ from cryptography.exceptions import InvalidSignature
 
 
 class MyCryptoLibrary:
-
     @staticmethod
     def encrypt_message(msg, PK):
         cipher = PK.encrypt(
             msg,
-            padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()),
-                         algorithm=hashes.SHA256(),
-                         label=None))
+            padding.OAEP(
+                mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                algorithm=hashes.SHA256(),
+                label=None,
+            ),
+        )
         return cipher
 
     @staticmethod
@@ -22,7 +24,9 @@ class MyCryptoLibrary:
             padding.OAEP(
                 mgf=padding.MGF1(algorithm=hashes.SHA256()),
                 algorithm=hashes.SHA256(),
-                label=None))
+                label=None,
+            ),
+        )
         return d_cipher
 
     @staticmethod
@@ -30,9 +34,10 @@ class MyCryptoLibrary:
         signature = private_key.sign(
             msg,
             padding.PSS(
-                mgf=padding.MGF1(hashes.SHA256()),
-                salt_length=padding.PSS.MAX_LENGTH
-            ), hashes.SHA256())
+                mgf=padding.MGF1(hashes.SHA256()), salt_length=padding.PSS.MAX_LENGTH
+            ),
+            hashes.SHA256(),
+        )
         return signature
 
     @staticmethod
@@ -43,8 +48,10 @@ class MyCryptoLibrary:
                 msg,
                 padding.PSS(
                     mgf=padding.MGF1(hashes.SHA256()),
-                    salt_length=padding.PSS.MAX_LENGTH
-                ), hashes.SHA256())
+                    salt_length=padding.PSS.MAX_LENGTH,
+                ),
+                hashes.SHA256(),
+            )
             print("[MESSAGE VERIFIED]")
 
         except InvalidSignature:

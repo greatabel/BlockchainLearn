@@ -1,20 +1,20 @@
-""" Alice (localhost) """
 import socket, pickle, random
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization, asymmetric
 from i2mycrypto import MyCryptoLibrary
+from termcolor import colored, cprint
 
 
-# Key generation
+# 密钥生成
 alice_private_key = asymmetric.rsa.generate_private_key(
-    public_exponent=65537,
-    key_size=4096,
-    backend=default_backend())
-
-# Assuming that Bob has Alice's PK, thus saving it as PEM format at Bob's PC.
+    public_exponent=65537, key_size=4096, backend=default_backend()
+)
+print("alice_private_key generated", alice_private_key, "#" * 20)
+# 假设 Bob 有 Alice 的 PK，因此在 Bob 的共钥中将其保存为 PEM 格式
 alice_key_pem = alice_private_key.public_key().public_bytes(
     encoding=serialization.Encoding.PEM,
-    format=serialization.PublicFormat.SubjectPublicKeyInfo)
+    format=serialization.PublicFormat.SubjectPublicKeyInfo,
+)
 
 with open("PK_alice.pem", "wb") as key:
     key.write(alice_key_pem)
@@ -23,8 +23,8 @@ with open("PK_alice.pem", "wb") as key:
 def retrieve_bobs_pk():
     with open("PK_bob.pem", "rb") as pem_file:
         PK = serialization.load_pem_public_key(
-            pem_file.read(),
-            backend=default_backend())
+            pem_file.read(), backend=default_backend()
+        )
         return PK
 
 
@@ -51,13 +51,20 @@ def compute_dice_throw(a, b):
 
 # TCP with ipv4
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-host = "127.0.0.1"; port = 6677
+host = "127.0.0.1"
+port = 6677
 address = (host, port)
 
 # Connect to address
 server.connect(address)
 running = True
-print(f"[Connected to {host} at port {port}]")
+
+text = colored(
+    f"[Connected to {host} at port {port}]",
+    "green",
+    attrs=["reverse", "blink"],
+)
+print(text)
 
 
 while running:
@@ -67,7 +74,7 @@ while running:
     print("********* Alice's dice throw *********")
 
     # [a1] Alice samples random bit a and random 128 bit string and sends Com(a,r)
-    a1 = '1001'  # Alice not honest!!!!!!!!!!!!!!!!
+    a1 = "1001"  # Alice not honest!!!!!!!!!!!!!!!!
     r1 = format(random.getrandbits(128), "b")
     c1 = bytes(a1 + r1, encoding="utf-8")
     c_hashed1 = MyCryptoLibrary.hash_message(c1)
