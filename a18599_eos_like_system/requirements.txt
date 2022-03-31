@@ -1,0 +1,15 @@
+numpy==1.21.5
+matplotlib==3.5.1
+requests
+flasgger
+Flask
+flask-marshmallow
+pytest
+python-dotenv
+pytest-cov
+flask-wtf
+flask-cors
+Flask-Login
+flask_sqlalchemy
+cryptography==36.0.1
+termcolor
