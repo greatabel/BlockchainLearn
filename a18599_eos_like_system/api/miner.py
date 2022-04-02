@@ -27,6 +27,7 @@ def mine():
         200:
             description: Result of the mining attempt and the new block
     """
+    print('bgin mining new eos-block...', '#'*20)
     block = blockchain.mine('address')
 
     response = {

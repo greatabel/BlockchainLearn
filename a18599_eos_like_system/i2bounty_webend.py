@@ -136,6 +136,21 @@ class PageResult:
     def __repr__(self):  # used for page linking
         return "/home/{}".format(self.page + 1)  # view the next page
 
+#-------blockchain  -------------------
+
+@app.route("/show_block/<id>", methods=["GET"])
+def show_block(id):
+    print('show_block in backend', id)
+    if request.method == "GET":
+        # 到数据库查询悬赏商品详情
+        blog = Blog.query.filter_by(id=id).first_or_404()
+        import requests
+        response = requests.get("http://localhost:4999/api/demo_simulation/simulate")
+        eos_r = response.json()
+        print(eos_r)
+        # 渲染悬赏商品详情页面
+        return rt("query_blog.html", blog=blog)
+
 
 #-------big screen -------------------
 

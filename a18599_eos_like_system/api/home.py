@@ -16,4 +16,4 @@ api = Blueprint('api', __name__)
 
 @api.route('/', defaults={'page': 'index'})
 def show(page):
-    return "Home"
+    return "EOS-like home!"
