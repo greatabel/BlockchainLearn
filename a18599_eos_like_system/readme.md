@@ -1,6 +1,5 @@
 # 学习材料：
 
-
 https://www.numpy.org.cn/
 NumPy官方的中文文档
 http://www.pypandas.cn/
@@ -33,22 +32,17 @@ pip3 install --upgrade -r requirements.txt
 5.
 启动3个命令行窗口，在terminal分别输入3个不同的命令：
 
-python3 i0bob_mock.py
+python3 i0eos_like_app_backend.py
 
-python3 i3app.py
+python3 i2bounty_web_call_eos.py
 
-python3 i1alice_mock.py
 
---------------------------------------------------------
+6.
+浏览器访问：
 
-# 架构部分
+http://localhost:5000/home
 
-我们做一个类似于这个的安全多方计算技术原型出来：
-http://blog.nsfocus.net/ot-1/
- 我们也类似：也假设Alice 和 Bob 也在使用不安全的网络，他们没有真实性、机密性和完整性保证。
- 当Alice和Bob互不信任时，他们如何在不安全的网络上玩在线文章中类似的拆箱子/或者区块链中最常见的看骰子游戏保证公平的应用。具体我们打算这样
-1. 设计一个协议，允许 Alice 和 Bob 在不安全的网络上掷一个虚拟的 6 面骰/或者百万服务问题箱子，即使他们彼此不信任。（使用私钥/密钥，使用mod 模运算，保证秘密共享）
-2. 保证概协议是安全的。
-签名确保 A 或 B 知道消息来自正确的发件人。此外，相同的编码和哈希算法确保我们能够验证消息。随机性确保一方在发送随机位之前无法了解有关消息的信息。
-因为只要 a 或 b 是随机的，两个位串上的异或将返回一个随机位串，因此一方必须诚实。 真实性是一个重要因素，签名确保 A 或 B 知道消息来自正确的发件人。 此外，相同的编码和哈希算法确保我们能够验证消息。 随机性确保一方在发送随机位之前无法了解有关消息的信息。
-3. 用python/numpy/pandas/flask去实现的虚拟骰子协议。实现必须由一个代表 Alice 的程序和另一个代表 Bob 的程序组成，它们通过网络进行通信（在 localhost 上运行的两个进程，然后可视化估计flask/vue）
+默认账号 greatabel1@126.com ps:abel
+自己也可以正常注册
+
+

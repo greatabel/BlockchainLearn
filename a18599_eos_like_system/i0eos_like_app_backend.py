@@ -28,13 +28,7 @@ app.register_blueprint(transaction_api, url_prefix="/api/transaction")
 
 
 if __name__ == "__main__":
-    from argparse import ArgumentParser
-
-    parser = ArgumentParser()
-    parser.add_argument(
-        "-p", "--port", default=5000, type=int, help="port to listen on"
-    )
-    args = parser.parse_args()
-    port = args.port
-
+    print('EOS Like Blockchain is running...')
+    port = 4999
+    app.debug = True
     app.run(host="127.0.0.1", port=port)
