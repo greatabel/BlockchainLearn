@@ -7,28 +7,28 @@ from api.miner import miner_api
 from api.transaction import transaction_api
 
 
-def create_app():
-    app = Flask(__name__)
-    return app
+def create_eos_like_app():
+    eos_like_app = Flask(__name__)
+    return eos_like_app
 
 
-app = create_app()
-ma = Marshmallow(app)
+eos_like_app = create_eos_like_app()
+ma = Marshmallow(eos_like_app)
 
-app.config["SWAGGER"] = {
-    "title": "Blockchain API",
+eos_like_app.config["SWAGGER"] = {
+    "title": "EOS-like Blockchain API",
 }
-swagger = Swagger(app)
+swagger = Swagger(eos_like_app)
 
 
-app.register_blueprint(api, url_prefix="/api")
-app.register_blueprint(blockchain_api, url_prefix="/api/blockchain")
-app.register_blueprint(miner_api, url_prefix="/api/miner")
-app.register_blueprint(transaction_api, url_prefix="/api/transaction")
+eos_like_app.register_blueprint(api, url_prefix="/api")
+eos_like_app.register_blueprint(blockchain_api, url_prefix="/api/blockchain")
+eos_like_app.register_blueprint(miner_api, url_prefix="/api/miner")
+eos_like_app.register_blueprint(transaction_api, url_prefix="/api/transaction")
 
 
 if __name__ == "__main__":
     print('EOS Like Blockchain is running...')
     port = 4999
-    app.debug = True
-    app.run(host="127.0.0.1", port=port)
+    eos_like_app.debug = True
+    eos_like_app.run(host="127.0.0.1", port=port)

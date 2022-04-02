@@ -34,7 +34,7 @@ pip3 install --upgrade -r requirements.txt
 
 python3 i0eos_like_app_backend.py
 
-python3 i2bounty_web_call_eos.py
+python3 i2bounty_webend.py
 
 
 6.

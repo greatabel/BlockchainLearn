@@ -23,6 +23,7 @@ def get_chain():
     Returns blockchain as a list of blocks with all transactions.
     ---
     """
+    print('get information from eos-like chain')
     chain = blockchain.full_chain
     response = {
         'blockchain': chain
