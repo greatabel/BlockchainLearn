@@ -8,8 +8,11 @@
         <figure>
             <img src="/static/images/app_data/NFT{{blog.id }}.jpeg" class="img-fluid" style="height:250px;width:250px;">
         </figure>
-        
+
     <a href="#" class="btn-showblock" id="{{blog.id}}">模拟eos-transaction</a>
+  <br/>
+  <br/>
+      <a href="#" class="btn-miner" id="{{blog.id}}">模拟eos悬赏挖矿</a>
   <br/>
   <br/>
     <a href="#" class="btn-delete" id="{{blog.id}}">删除</a>
@@ -70,4 +73,28 @@
         })
     });
 
+
+    $('a.btn-miner').on('click',function(evt){
+        // 通知浏览器不要执行与事件关联的默认动作
+        evt.preventDefault();
+        // 获取课程ID
+        var blogid = $(this).attr('id');
+        $.ajax({
+            // 请求URL
+            url: "/eos_miner/" + blogid,
+            // 请求方法类型
+            type: "GET",
+            contentType:"application/json",
+            // 删除成功响应函数
+            success:function(resp){
+                // 在当前页面打开课程列表页面
+                window.open("/blogs","_self");
+            },
+            // 删除失败响应函数
+            error:function(resp){
+                // 删除失败，给出错误提示
+                alert("delete doc fail！详情：" + resp.message);
+            }
+        })
+    });
 </script>

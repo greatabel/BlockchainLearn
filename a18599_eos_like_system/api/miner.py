@@ -17,16 +17,6 @@ miner_api = Blueprint('miner', __name__)
     }
 })
 def mine():
-    """
-    Mines a new block into the chain
-    Consolidates the pending transactions into a new block, and adds the block to the blockchain
-    ---
-    produces:
-        - application/json
-    responses:
-        200:
-            description: Result of the mining attempt and the new block
-    """
     print('bgin mining new eos-block...', '#'*20)
     block = blockchain.mine('address')
 

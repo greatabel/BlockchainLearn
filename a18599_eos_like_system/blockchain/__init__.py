@@ -2,6 +2,9 @@ import hashlib
 from blockchain.block import Block
 from blockchain.transaction import Transaction
 
+from termcolor import colored, cprint
+import time
+
 
 class Blockchain:
 
@@ -12,21 +15,12 @@ class Blockchain:
         self.create_genesis()
 
     def create_genesis(self):
-        """
-        Creates the Genesis block and passes it to the chain
 
-        :return: None
-        """
         genesis_block = Block(0, self.__current_transactions, 0, '00')
         self.__chain.append(genesis_block)
 
     def add_block(self, block):
-        """
-        Creates a new block and passes it to the chain
 
-        :param block: <Block> Block to add to the chain
-        :return: <bool> True if the block is added to the chain, False if not.
-        """
         if self.validate_block(block, self.last_block):
             self.__chain.append(block)
 
@@ -38,16 +32,14 @@ class Blockchain:
         return False
 
     def create_transaction(self, sender, recipient, amount):
-        """
-        Creates a new transaction to go into the next block
 
-        :param sender: <str> sender address
-        :param recipient: <str> recipient address
-        :param amount: <float> amount
-        :return: <Transaction> generated transaction
-        """
         transaction = Transaction(sender, recipient, amount)
-
+        text = colored(
+            "----- Creates a new transaction to go into the next block------",
+            "red",
+            attrs=["reverse", "blink"],
+        )
+        print(text)
         if transaction.validate():
             self.__current_transactions.append(transaction)
 
@@ -56,12 +48,7 @@ class Blockchain:
         return None, False
 
     def mine(self, reward_address):
-        """
-        Mines a new block into the chain
 
-        :param reward_address: <str> address where the reward coin will be transferred to
-        :return: result of the mining attempt and the new block
-        """
         last_block = self.last_block
         index = last_block.index + 1
         previous_hash = last_block.hash
@@ -87,27 +74,15 @@ class Blockchain:
 
     @staticmethod
     def validate_proof_of_work(last_nonce, last_hash, nonce):
-        """
-        Validates the nonce
 
-        :param last_nonce: <int> Nonce of the last block
-        :param nonce: <int> Current nonce to be validated
-        :param last_hash: <str> Hash of the last block
-        :return: <bool> True if correct, False if not.
-        """
         sha = hashlib.sha256(f'{last_nonce}{last_hash}{nonce}'.encode())
+
+        print('validate_proof_of_work hash is ->', sha.hexdigest()[:4])
+        time.sleep(0.00001)
         return sha.hexdigest()[:4] == '0000'
 
     def generate_proof_of_work(self, block):
-        """
-        Very simple proof of work algorithm:
 
-        - Find a number 'p' such that hash(pp') contains 4 leading zeroes
-        - Where p is the previous proof, and p' is the new proof
-
-        :param block: <Block> reference to the last block object
-        :return: <int> generated nonce
-        """
         last_nonce = block.nonce
         last_hash = block.hash
 
@@ -118,14 +93,7 @@ class Blockchain:
         return nonce
 
     def validate_block(self, current_block, previous_block):
-        """
-        Validates a block with reference to its previous
-
-        :param current_block:
-        :param previous_block:
-        :return:
-        """
-        # Check the block index
+        print('validate_block')
         if current_block.index != previous_block.index + 1:
             return False
 
@@ -141,13 +109,7 @@ class Blockchain:
         return True
 
     def validate_chain(self, chain_to_validate):
-        """
-        Verifies if a given chain is valid
 
-        :param chain_to_validate: <[Block]>
-        :return: <bool> True if the chain is valid
-        """
-        # First validate both genesis blocks
         if chain_to_validate[0].hash_block() != self.__chain[0].hash_block():
             return False
 
@@ -159,13 +121,7 @@ class Blockchain:
         return True
 
     def replace_chain(self, new_chain):
-        """
-        Attempts to replace the chain for a new one
 
-        :param new_chain:
-        :return: <bool> True if the chain was replace, False if not.
-        """
-        # We only replace if the new chain is bigger than the current one
         if len(new_chain) <= len(self.__chain):
             return False
 

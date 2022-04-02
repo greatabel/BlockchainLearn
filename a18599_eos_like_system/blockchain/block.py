@@ -2,6 +2,7 @@ import hashlib
 from api.schema.block import BlockSchema
 from time import time
 
+from termcolor import colored, cprint
 
 class Block:
     def __init__(self, index, transactions, nonce, previous_hash):
@@ -20,15 +21,16 @@ class Block:
         self.hash = self.hash_block()
 
     def serialize(self, ignore=None):
-        """
-        Serializes a block into a string
 
-        :return:
-        """
         if ignore is None:
             ignore = []
         block_params = {x: self.__dict__[x] for x in self.__dict__ if x not in ignore}
-
+        text = colored(
+            "----- Serializes a block into a string------",
+            "green",
+            attrs=["reverse", "blink"],
+        )
+        print(text)
         return BlockSchema().dumps(block_params)
 
     def hash_block(self):

@@ -152,6 +152,20 @@ def show_block(id):
         return rt("query_blog.html", blog=blog)
 
 
+@app.route("/eos_miner/<id>", methods=["GET"])
+def eos_miner(id):
+    print('eos_miner in backend', id)
+    if request.method == "GET":
+        # 到数据库查询悬赏商品详情
+        blog = Blog.query.filter_by(id=id).first_or_404()
+        import requests
+        response = requests.get("http://localhost:4999/api/demo_simulation/simulate_miner")
+        eos_r = response.json()
+        print(eos_r)
+        # 渲染悬赏商品详情页面
+        return rt("query_blog.html", blog=blog)
+
+
 #-------big screen -------------------
 
 @app.route('/big_screen')
