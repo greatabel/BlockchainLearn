@@ -67,7 +67,6 @@ if __name__ == "__main__":
         )
         print(text)
 
-
     text = colored(
         "----- 持久化本配置项下全部训练结果 ------ ",
         "red",
