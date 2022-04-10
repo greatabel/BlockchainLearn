@@ -37,7 +37,5 @@ pip3 install --upgrade -r requirements.txt
 5.
 启动3个命令行窗口，在terminal分别输入3个不同的命令：
 
-python3 i0eos_like_app_backend.py
-
-python3 i2bounty_webend.py
+python3 i2main.py -c  utils/conf0.json
 

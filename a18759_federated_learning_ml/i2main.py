@@ -7,6 +7,8 @@ import torch, random
 from server import *
 from client import *
 import models, datasets
+from termcolor import colored, cprint
+import pickle
 
 
 if __name__ == "__main__":
@@ -18,15 +20,24 @@ if __name__ == "__main__":
     with open(args.conf, "r") as f:
         conf = json.load(f)
 
-    train_datasets, eval_datasets = datasets.get_dataset("./data/", conf["type"])
+    train_datasets, eval_datasets = datasets.get_dataset("data/", conf["type"])
 
     server = Server(conf, eval_datasets)
     clients = []
+
+    text = colored(
+        "----- 本地客户端数量 ------> " + str(conf["no_models"]),
+        "green",
+        attrs=["reverse", "blink"],
+    )
+    print(text)
 
     for c in range(conf["no_models"]):
         clients.append(Client(conf, server.global_model, train_datasets, c))
 
     print("\n\n")
+    acc_list = []
+    loss_list = []
     for e in range(conf["global_epochs"]):
 
         candidates = random.sample(clients, conf["k"])
@@ -37,6 +48,7 @@ if __name__ == "__main__":
             weight_accumulator[name] = torch.zeros_like(params)
 
         for c in candidates:
+            print("local_train:", c)
             diff = c.local_train(server.global_model)
 
             for name, params in server.global_model.state_dict().items():
@@ -46,4 +58,29 @@ if __name__ == "__main__":
 
         acc, loss = server.model_eval()
 
-        print("Epoch %d, acc: %f, loss: %f\n" % (e, acc, loss))
+        acc_list.append(acc)
+        loss_list.append(loss)
+        text = colored(
+            "Epoch %d, acc: %f, loss: %f\n" % (e, acc, loss),
+            "cyan",
+            attrs=["reverse", "blink"],
+        )
+        print(text)
+
+
+    text = colored(
+        "----- 持久化本配置项下全部训练结果 ------ ",
+        "red",
+        attrs=["reverse", "blink"],
+    )
+    print(text)
+
+    # --------- share data -------
+    shared = {"acc": acc_list, "loss": loss_list}
+    myconf = args.conf.rsplit("/", 1)[-1]
+    # print("myconf=", myconf)
+    filename = "statistical_plot_data/" + myconf + ".pkl"
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    fp = open(filename, "wb")
+    pickle.dump(shared, fp)
+    # --------- share data end -------

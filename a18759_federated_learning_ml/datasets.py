@@ -36,4 +36,21 @@ def get_dataset(dir, name):
         )
         eval_dataset = datasets.CIFAR10(dir, train=False, transform=transform_test)
 
+    print("len(train_dataset)=", len(train_dataset))
+    print("len(eval_dataset)=", len(eval_dataset))
+
+    print("\n")
+    # 随机再从整体筛选出小批量随机到数据集，因为训练时间太长，为了演示录制视频加速，使用小批量数据集
+    # 不需要时候可以关闭： 直接注释掉start 到 end的 部分
+    print("Start:Fast training with small batches.")
+    fast_rato = 20
+    evens = list(range(0, len(train_dataset), fast_rato))
+    odds = list(range(0, len(eval_dataset), fast_rato))
+    train_dataset = torch.utils.data.Subset(train_dataset, evens)
+    eval_dataset = torch.utils.data.Subset(eval_dataset, odds)
+
+    print("len(train_dataset)=", len(train_dataset))
+    print("len(eval_dataset)=", len(eval_dataset))
+    print("End:Fast training with small batches.")
+
     return train_dataset, eval_dataset

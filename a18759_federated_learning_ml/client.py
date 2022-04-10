@@ -33,7 +33,7 @@ class Client(object):
             lr=self.conf["lr"],
             momentum=self.conf["momentum"],
         )
-        # print(id(self.local_model))
+        print("In local_train ", id(self.local_model))
         self.local_model.train()
         for e in range(self.conf["local_epochs"]):
 
