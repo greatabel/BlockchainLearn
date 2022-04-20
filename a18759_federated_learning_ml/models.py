@@ -7,6 +7,7 @@ def get_model(name="vgg16", pretrained=True):
         model = models.resnet18(pretrained=pretrained)
     elif name == "resnet50":
         model = models.resnet50(pretrained=pretrained)
+        # print('resnet50=>', model)
     elif name == "densenet121":
         model = models.densenet121(pretrained=pretrained)
     elif name == "alexnet":
