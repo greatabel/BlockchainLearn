@@ -22,12 +22,12 @@
 
 <!-- 先引入jquery，下面要用到-->
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-<!--发送ajax请求删除课程 -->
+<!--发送ajax请求删除物品 -->
 <script type="text/javascript">
     $('a.btn-delete').on('click',function(evt){
         // 通知浏览器不要执行与事件关联的默认动作
         evt.preventDefault();
-        // 获取课程ID
+        // 获取物品ID
         var blogid = $(this).attr('id');
         $.ajax({
             // 请求URL
@@ -37,7 +37,7 @@
             contentType:"application/json",
             // 删除成功响应函数
             success:function(resp){
-                // 在当前页面打开课程列表页面
+                // 在当前页面打开物品列表页面
                 window.open("/blogs","_self");
             },
             // 删除失败响应函数
@@ -52,7 +52,7 @@
     $('a.btn-showblock').on('click',function(evt){
         // 通知浏览器不要执行与事件关联的默认动作
         evt.preventDefault();
-        // 获取课程ID
+        // 获取物品ID
         var blogid = $(this).attr('id');
         $.ajax({
             // 请求URL
@@ -62,7 +62,7 @@
             contentType:"application/json",
             // 删除成功响应函数
             success:function(resp){
-                // 在当前页面打开课程列表页面
+                // 在当前页面打开物品列表页面
                 window.open("/blogs","_self");
             },
             // 删除失败响应函数
@@ -77,7 +77,7 @@
     $('a.btn-miner').on('click',function(evt){
         // 通知浏览器不要执行与事件关联的默认动作
         evt.preventDefault();
-        // 获取课程ID
+        // 获取物品ID
         var blogid = $(this).attr('id');
         $.ajax({
             // 请求URL
@@ -87,7 +87,7 @@
             contentType:"application/json",
             // 删除成功响应函数
             success:function(resp){
-                // 在当前页面打开课程列表页面
+                // 在当前页面打开物品列表页面
                 window.open("/blogs","_self");
             },
             // 删除失败响应函数

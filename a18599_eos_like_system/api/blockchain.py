@@ -8,53 +8,53 @@ from api.schema.block import BlockSchema
 from termcolor import colored, cprint
 
 
-blockchain_api = Blueprint('blockchain', __name__)
+blockchain_api = Blueprint("blockchain", __name__)
 
 
-@blockchain_api.route('/')
-@swag_from({
-    'responses': {
-        HTTPStatus.OK.value: {
-            'description': 'The blockchain as a list of blocks with all transactions.',
-            'schema': BlockchainSchema
+@blockchain_api.route("/")
+@swag_from(
+    {
+        "responses": {
+            HTTPStatus.OK.value: {
+                "description": "The blockchain as a list of blocks with all transactions.",
+                "schema": BlockchainSchema,
+            }
         }
     }
-})
+)
 def get_chain():
     """
     Returns the full blockchain
     Returns blockchain as a list of blocks with all transactions.
     ---
     """
-    print('get information from eos-like chain...All of it..')
+    print("get information from eos-like chain...All of it..")
     chain = blockchain.full_chain
-    response = {
-        'blockchain': chain
-    }
+    response = {"blockchain": chain}
 
     return BlockchainSchema().dump(response), 200
 
 
-@blockchain_api.route('/block/<block_hash>')
-@swag_from({
-    'parameters': [
-        {
-            "name": "block_hash",
-            "in": "path",
-            "type": "string",
-            "required": True,
-        }
-    ],
-    'responses': {
-        HTTPStatus.OK.value: {
-            'description': 'The block with all its transactions.',
-            'schema': BlockSchema
+@blockchain_api.route("/block/<block_hash>")
+@swag_from(
+    {
+        "parameters": [
+            {
+                "name": "block_hash",
+                "in": "path",
+                "type": "string",
+                "required": True,
+            }
+        ],
+        "responses": {
+            HTTPStatus.OK.value: {
+                "description": "The block with all its transactions.",
+                "schema": BlockSchema,
+            },
+            HTTPStatus.NOT_FOUND.value: {"description": "Block not found."},
         },
-        HTTPStatus.NOT_FOUND.value: {
-            'description': 'Block not found.'
-        }
     }
-})
+)
 def get_block(block_hash):
     """
     Returns the full blockchain

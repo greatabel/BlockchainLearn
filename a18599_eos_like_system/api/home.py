@@ -12,8 +12,9 @@ from flask import jsonify
 from flask_cors import CORS
 
 
-api = Blueprint('api', __name__)
+api = Blueprint("api", __name__)
 
-@api.route('/', defaults={'page': 'index'})
+
+@api.route("/", defaults={"page": "index"})
 def show(page):
     return "EOS-like home!"
