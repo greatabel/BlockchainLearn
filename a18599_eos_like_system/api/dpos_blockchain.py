@@ -58,11 +58,11 @@ class DPOS_Blockchain(object):
     def new_transaction(self, sender, item_name, bill_amount):
         self.unverified_transactions.append(
             {
-                "商城模拟用户名": sender,
-                "接受方": "dpos EOS Like System",
-                "物品": item_name,
-                "投标价值": bill_amount,
-                "时间戳": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "shop simulate username": sender,
+                "accepter": "dpos EOS Like System",
+                "item": item_name,
+                "bidding value": bill_amount,
+                "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             }
         )
         return self.last_block["index"] + 1

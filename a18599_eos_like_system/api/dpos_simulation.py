@@ -30,9 +30,14 @@ def simulate():
     )
     print(welcome)
 
-    print('#'*10, 'step1: simulate many nodes server want to join the dpos-EOS distrubute system.\n')
+    step1 = colored(
+        "---------step1 dpos_blockchain simulate nodes adding----------",
+        "blue",
+        attrs=["reverse", "blink"],
+    )
+    print(step1)
 
-    print('node 1')
+    print('simulate node 1')
     # Update an existing resource
     json_data = {
                 'nodes': 'http://localhost:4999',
@@ -43,7 +48,7 @@ def simulate():
     print('dpos-eos-like-system 请求回应为:', response.text)
 
     time.sleep(1.5)
-    print('node 2')
+    print('simulate node 2')
     json_data = {
                 'nodes': 'http://localhost:5010',
                 'stake': 50
@@ -53,7 +58,7 @@ def simulate():
     print('dpos-eos-like-system 请求回应为:', response.text)
 
     time.sleep(1.5)
-    print('node 3')
+    print('simulate node 3')
     json_data = {
                 'nodes': 'http://localhost:5011',
                 'stake': 51
@@ -63,7 +68,7 @@ def simulate():
     print('dpos-eos-like-system 请求回应为:', response.text)
 
     time.sleep(1.5)
-    print('node 4')
+    print('simulate node 4')
     json_data = {
                 'nodes': 'http://localhost:5012',
                 'stake': 52
@@ -72,6 +77,65 @@ def simulate():
     response = requests.post(url = add_api, json=json_data)
     print('dpos-eos-like-system 请求回应为:', response.text)
 
+    step2 = colored(
+        "---------step2 dpos_blockchain simulate node voting---------",
+        "blue",
+        attrs=["reverse", "blink"],
+    )
+    print(step2)
+    time.sleep(2)
+
+    voting_api = 'http://localhost:4999/api/dpos/voting'
+    response = requests.get(url = voting_api)
+    print('dpos-eos-like-system 请求回应为:', response.text)
+    time.sleep(2)
+
+    step3 = colored(
+        "---------step3 dpos_blockchain simulate node delegate show----------",
+        "blue",
+        attrs=["reverse", "blink"],
+    )
+    print(step3)
+    delegate_show_api = 'http://localhost:4999/api/dpos/delegates/show'
+    response = requests.get(url = delegate_show_api)
+    print('dpos-eos-like-system 请求回应为:', response.text)
+
+    step4 = colored(
+        "---------step4 dpos_blockchain simulate new transaction ----------",
+        "blue",
+        attrs=["reverse", "blink"],
+    )
+    print(step4)
+    json_data = {
+                'user_name': 'abel',
+                'item_name': 'Bounty Item NFT Demo',
+                'billing_value': 101
+                }
+    transactions_new_api = 'http://localhost:4999/api/dpos/transactions/new'
+    response = requests.post(url = transactions_new_api, json=json_data)
+    print('dpos-eos-like-system 请求回应为:', response.text)
+    time.sleep(1.5)
+
+    json_data = {
+                'user_name': 'zaiye',
+                'item_name': 'Bounty Item NFT Demo',
+                'billing_value': 110
+                }
+    transactions_new_api = 'http://localhost:4999/api/dpos/transactions/new'
+    response = requests.post(url = transactions_new_api, json=json_data)
+    print('dpos-eos-like-system 请求回应为:', response.text)
+    time.sleep(1.5)
+
+
+    step5 = colored(
+        "---------step5 dpos_blockchain simulate mining----------",
+        "blue",
+        attrs=["reverse", "blink"],
+    )
+    print(step5)
+    mine_api = 'http://localhost:4999/api/dpos/mine'
+    response = requests.get(url = mine_api)
+    print('dpos-eos-like-system mining回应为:', response.text)
 
     return {"msg": "dpos simulate!"}, 200
 
@@ -119,15 +183,15 @@ def mine():
 def new_transaction():
     values = request.get_json()
 
-    required = ["Customer name", "Item name", "Total billing amount"]
+    required = ["user_name", "item_name", "billing_value"]
     if not all(k in values for k in required):
         return (
-            "Missing values! Please enter customer name, item name and billing amount.",
+            "Missing values! Please enter user_name, item_name and billing amount.",
             400,
         )
 
     index = blockchain.new_transaction(
-        values["Customer name"], values["Item name"], values["Total billing amount"]
+        values["user_name"], values["item_name"], values["billing_value"]
     )
 
     response = {"message": f"Transaction will be added to block {index}"}
@@ -187,8 +251,8 @@ def delegates():
     show_delegates = blockchain.selection()
 
     response = {
-        "信息": "选择用于块挖掘的 3 个代表节点是:",
-        "委托节点": blockchain.delegates,
+        "message": "3 choosed nodes as delegates are:",
+        "node_delegates": blockchain.delegates,
     }
     return jsonify(response), 200
 
@@ -199,7 +263,7 @@ def sync_delegates():
     sync_delegates = blockchain.sync()
 
     response = {
-        "message": "委托节点如下:",
+        "message": "delegate nodes are:",
         "node_delegates": blockchain.delegates,
     }
     return jsonify(response), 200
