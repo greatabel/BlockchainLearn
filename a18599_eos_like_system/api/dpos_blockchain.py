@@ -8,40 +8,37 @@ from random import randint
 # dpos Blockchain class
 class DPOS_Blockchain(object):
 
-    # Constructor which creates lists to store the DPOS Blockchain and the transactions
+    # 创建列表以存储 DPOS 区块链和交易的构造函数
     def __init__(self):
 
-        # List to store the DPOS Blockchain
         self.chain = []
 
-        # List to store the unverified transactions
         self.unverified_transactions = []
 
-        # List to store verified transactions
         self.verified_transactions = []
 
         # Genesis block
         self.new_block(previous_hash=1)
 
-        # Set containing the nodes in the network. Used set here to prevent the same node getting added again.
+        # 包含网络中节点的集合。 在此处使用 set 以防止再次添加相同的节点。
         self.nodes = set()
 
-        # List containing all the nodes along with their stake in the network
+        # 包含所有节点及其在网络中的股份的列表
         self.all_nodes = []
 
-        # List of all the voting nodes in the network
+        # 投票节点池
         self.voteNodespool = []
 
-        # List which stores all the nodes in descending order of votes received
+        # 按收到的票数降序存储所有节点的列表
         self.starNodespool = []
 
-        # List to store the top 3 nodes with the highest (stake * votes_received)
+        # 存储前 3 个最高节点的列表 (stake * votes_received)
         self.superNodespool = []
 
-        # List to store the address of the delegate nodes selected for mining process
+        # 存储选择用于挖掘过程的委托节点地址的列表
         self.delegates = []
 
-    # Method to create a new block in the DPOS Blockchain
+    # 在 DPOS 区块链中创建新区块的方法
     def new_block(self, previous_hash=None):
         block = {
             "index": len(self.chain) + 1,
@@ -57,15 +54,15 @@ class DPOS_Blockchain(object):
         self.chain.append(block)
         return block
 
-    # Method to add a new transaction in the next block
+    # 在下一个区块中添加新交易的方法
     def new_transaction(self, sender, item_name, bill_amount):
         self.unverified_transactions.append(
             {
-                "Customer name": sender,
-                "Recipient": "Dexter's Coffee Shop",
-                "Item name": item_name,
-                "Total billing amount": bill_amount,
-                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "商城模拟用户名": sender,
+                "接受方": "dpos EOS Like System",
+                "物品": item_name,
+                "投标价值": bill_amount,
+                "时间戳": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             }
         )
         return self.last_block["index"] + 1
@@ -81,13 +78,11 @@ class DPOS_Blockchain(object):
         hash_val = hashlib.sha256(block_string).hexdigest()
         return hash_val
 
-    # Method to add node using its IP address to our Blockchain network.
     def add_node(self, address, stake):
         parsed_url = urlparse(address)
         authority = stake
         self.nodes.add((parsed_url.netloc, authority))
 
-    # Method to simulate the voting process
     def add_vote(self):
         self.all_nodes = list(self.nodes)
 
@@ -98,7 +93,6 @@ class DPOS_Blockchain(object):
 
         print(self.voteNodespool)
 
-    # Method to select top three nodes based on voting results
     def selection(self):
         self.starNodespool = sorted(
             self.voteNodespool, key=lambda vote: vote[2], reverse=True
@@ -113,9 +107,9 @@ class DPOS_Blockchain(object):
             self.delegates.append(y[0])
         print(self.delegates)
 
-    # Method to sync the list
+    # 同步到list
     def sync(self):
-        port = '4999'
+        port = "4999"
         r = requests.get("http://localhost:" + port + "/api/dpos/delegates/show")
         print(r)
 
@@ -124,7 +118,6 @@ class DPOS_Blockchain(object):
             self.delegates = delegates[0:3]
             print(self.delegates)
 
-    # Method to check if the chain is validated.
     def valid_chain(self, chain):
         last_block = chain[0]
         current_index = 1
@@ -141,7 +134,7 @@ class DPOS_Blockchain(object):
 
         return True
 
-    # Method to replace the DPOS Blockchain with the longest validated chain in the network.
+    # 用网络中最长的验证链替换 DPOS 区块链的方法。
     def resolve_chain(self):
         neighbours = self.nodes
         new_chain = None

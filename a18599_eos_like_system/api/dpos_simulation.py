@@ -1,15 +1,14 @@
-# Interacting with the Dexter's blockchain with multiple nodes using HTTP requests
-
+import requests
+import time
 from flask import Flask, jsonify, request
 
 from api.dpos_blockchain import DPOS_Blockchain
 
 from flask import Blueprint, abort
+from termcolor import colored, cprint
 
 
-# Initialise our node with identifier and instantiate the Blockchain class
-# app = Flask(__name__)
-
+# 用blueprint类标识符初始化我们的节点并实例化区块链类
 dpos_blockchain_api = Blueprint("dpos_simulation", __name__)
 
 blockchain = DPOS_Blockchain()
@@ -22,17 +21,72 @@ args = parser.parse_args()
 port = args.port
 
 
-# API endpoint to mine a block, its an HTTP GET request
+@dpos_blockchain_api.route("/simulate")
+def simulate():
+    welcome = colored(
+        "--------- dpos_blockchain_api: simulate ----------",
+        "blue",
+        attrs=["reverse", "blink"],
+    )
+    print(welcome)
+
+    print('#'*10, 'step1: simulate many nodes server want to join the dpos-EOS distrubute system.\n')
+
+    print('node 1')
+    # Update an existing resource
+    json_data = {
+                'nodes': 'http://localhost:4999',
+                'stake': 31
+                }
+    add_api = 'http://localhost:4999/api/dpos/nodes/add'
+    response = requests.post(url = add_api, json=json_data)
+    print('dpos-eos-like-system 请求回应为:', response.text)
+
+    time.sleep(1.5)
+    print('node 2')
+    json_data = {
+                'nodes': 'http://localhost:5010',
+                'stake': 50
+                }
+    add_api = 'http://localhost:4999/api/dpos/nodes/add'
+    response = requests.post(url = add_api, json=json_data)
+    print('dpos-eos-like-system 请求回应为:', response.text)
+
+    time.sleep(1.5)
+    print('node 3')
+    json_data = {
+                'nodes': 'http://localhost:5011',
+                'stake': 51
+                }
+    add_api = 'http://localhost:4999/api/dpos/nodes/add'
+    response = requests.post(url = add_api, json=json_data)
+    print('dpos-eos-like-system 请求回应为:', response.text)
+
+    time.sleep(1.5)
+    print('node 4')
+    json_data = {
+                'nodes': 'http://localhost:5012',
+                'stake': 52
+                }
+    add_api = 'http://localhost:4999/api/dpos/nodes/add'
+    response = requests.post(url = add_api, json=json_data)
+    print('dpos-eos-like-system 请求回应为:', response.text)
+
+
+    return {"msg": "dpos simulate!"}, 200
+
+
+# 挖矿dpos
 @dpos_blockchain_api.route("/mine", methods=["GET"])
 # Method to mine a block
 def mine():
     # port = 4999
     global port
-    # To ensure that only delegates elected by voting can mine a new block
+
     current_port = "localhost:" + str(port)
     if current_port in blockchain.delegates:
 
-        # To ensure that a new block is mined only if there are atleast 2 transactions
+        # 需要至少初始2节点
         if len(blockchain.unverified_transactions) >= 2:
             last_block = blockchain.last_block
             previous_hash = blockchain.hash(last_block)
@@ -60,7 +114,7 @@ def mine():
         return jsonify(response), 400
 
 
-# Endpoint for a new transaction
+
 @dpos_blockchain_api.route("/transactions/new", methods=["POST"])
 def new_transaction():
     values = request.get_json()
@@ -80,14 +134,14 @@ def new_transaction():
     return jsonify(response), 201
 
 
-# Endpoint for viewing the blockchain
+
 @dpos_blockchain_api.route("/chain", methods=["GET"])
 def full_chain():
     response = {"chain": blockchain.chain, "length": len(blockchain.chain)}
     return jsonify(response), 200
 
 
-# Endpoint for adding HTTP address of new nodes along with their stakes in the network.
+# 用于添加新节点的 HTTP 地址及其在网络中的股份的节点
 @dpos_blockchain_api.route("/nodes/add", methods=["POST"])
 def add_nodes():
     values = request.get_json()
@@ -106,7 +160,7 @@ def add_nodes():
     return jsonify(response), 201
 
 
-# Endpoint to start the voting process
+# 开启投票
 @dpos_blockchain_api.route("/voting", methods=["GET"])
 def voting():
     print('port:', port)
@@ -127,31 +181,31 @@ def voting():
         return jsonify(response), 400
 
 
-# Endpoint to view the list of all three elected delegate nodes
+# 代理节点展示
 @dpos_blockchain_api.route("/delegates/show", methods=["GET"])
 def delegates():
     show_delegates = blockchain.selection()
 
     response = {
-        "message": "The 3 delegate nodes selected for block mining are:",
-        "node_delegates": blockchain.delegates,
+        "信息": "选择用于块挖掘的 3 个代表节点是:",
+        "委托节点": blockchain.delegates,
     }
     return jsonify(response), 200
 
 
-# Endpoint to synchronise the list of elected delegates with all other nodes in the network
+# 与网络中所有其他节点同步当选代表名单的端点
 @dpos_blockchain_api.route("/delegates/sync", methods=["GET"])
 def sync_delegates():
     sync_delegates = blockchain.sync()
 
     response = {
-        "message": "The delegate nodes are:",
+        "message": "委托节点如下:",
         "node_delegates": blockchain.delegates,
     }
     return jsonify(response), 200
 
 
-# Endpoint to resolve and replace current chain with the longest validated one,achieving consensus
+# 用最长的验证链解决和替换当前链的端点，达成共识
 @dpos_blockchain_api.route("/chain/resolve", methods=["GET"])
 def consensus():
     replaced = blockchain.resolve_chain()
