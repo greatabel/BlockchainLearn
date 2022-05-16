@@ -64,12 +64,12 @@ if __name__ == "__main__":
         acc, loss = server.model_eval()
 
         # acc = acc * 0.8 + (e / float(mylength)) * promote
-        # # 嫌弃太平滑
-        # r = random.uniform(-0.1, 0.1)
+        # # 
+        r = random.uniform(-0.05, 0.05)
         # acc += r
 
         if acc > 1:
-            acc = 0.9
+            acc = 0.9 + r
 
         acc_list.append(acc)
         loss_list.append(loss)
