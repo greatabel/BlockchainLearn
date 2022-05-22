@@ -18,9 +18,9 @@ from flask import jsonify
 from flask_cors import CORS
 from movie import create_app
 
-import es_search
+# import es_search
 
-import recommandation
+# import recommandation
 
 # vgg16 image like recommend
 import numpy as np
@@ -29,6 +29,7 @@ from feature_extractor import FeatureExtractor
 from datetime import datetime
 
 from pathlib import Path
+from i1common import get_acc_loss_by_conf
 
 # from movie.domain.model import Director, Review, Movie
 
@@ -181,9 +182,9 @@ def home(pagenum=1):
 
                     search_list.append(blog)
 
-            if len(search_list) == 0 and keyword in ['天气', '心情']:
-                es_content = es_search.mysearch(keyword)
-                search_list.append(es_content)
+            # if len(search_list) == 0 and keyword in ['天气', '心情']:
+            #     es_content = es_search.mysearch(keyword)
+            #     search_list.append(es_content)
             # for movie in notice_list:
             #     if movie.director.director_full_name == keyword:
             #         search_list.append(movie)
@@ -280,8 +281,9 @@ def query_note(id):
 
 
 ### -------------end of home
-@app.route("/recommend", methods=["GET", "DELETE"])
-def recommend():
+
+@app.route("/federal_list", methods=["GET", "POST"])
+def federal_list():
     """
     查询ppt item 推荐
     """
@@ -289,11 +291,36 @@ def recommend():
         id = session["userid"]
         user = User.query.filter_by(id=id).first_or_404()
         print('*'*20, user.nickname, '*'*20)
-        choosed = recommandation.main(user.nickname)
-        print("给予离线交互数据进行协同推荐")
-        print(choosed, "#" * 20)
-        print("给予离线交互数据进行协同推荐")
-        return rt("recommend.html", choosed=choosed)
+
+        data = ''
+        acc = []
+        loss = []
+        return rt("federal_list.html", data=data, acc=acc, loss=loss)
+    else:
+        mode = request.form["mode"]
+        json_text = open('utils/'+mode, "rb").read()
+        data = json.loads(json_text)
+        
+
+
+        acc, loss = get_acc_loss_by_conf(mode+'.pkl')
+   
+
+        return rt("federal_list.html", data=data, acc=acc, loss=loss)
+# @app.route("/recommend", methods=["GET", "DELETE"])
+# def recommend():
+#     """
+#     查询ppt item 推荐
+#     """
+#     if request.method == "GET":
+#         id = session["userid"]
+#         user = User.query.filter_by(id=id).first_or_404()
+#         print('*'*20, user.nickname, '*'*20)
+#         choosed = recommandation.main(user.nickname)
+#         print("给予离线交互数据进行协同推荐")
+#         print(choosed, "#" * 20)
+#         print("给予离线交互数据进行协同推荐")
+#         return rt("recommend.html", choosed=choosed)
 
 
 @app.route("/picture_search", methods=["GET", "POST"])
@@ -318,10 +345,20 @@ def picture_search():
         # print('ids=', ids)
         # print(np.array(img_paths)[ids])
         scores = [(dists[id], img_paths[id]) for id in ids]
+        print('scores=>', scores)
+        myscores = []
+        pic_names = []
+        for s in scores:
+            myscores.append(s[0])
+            s2 = str(s[1]).rsplit('/', 1)[-1]
+            s2 = s2.split('_')[0]
+            pic_names.append(s2)
+        print('>'*20, myscores, pic_names)
         uploaded_img_path = uploaded_img_path.replace('movie/','')
         print('uploaded_img_path', uploaded_img_path)
         return rt(
-            "picture_search.html", query_path=uploaded_img_path, scores=scores
+            "picture_search.html", query_path=uploaded_img_path, scores=scores,
+            predict=pic_names[0],myscores=myscores
         )
     else:
         return rt("picture_search.html")
