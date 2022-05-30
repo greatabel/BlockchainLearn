@@ -51,14 +51,15 @@ marker_size = 14
 
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 4))
+# fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 4))
 line_labels = ["central1", "central2", "central3", "federate1"]
 ax1.set_xlabel("step", fontsize=font_size)
 ax1.set_xticks(range(20))
 # ax1.set_xticklabels(["0","-3","-5","-7","-10","-12","-15","-17","-20"], fontsize=font_size)
 ax1.set_xticklabels(list(range(20)), fontsize=font_size)
 
-ax1.set_yticks([0.3, 0.4, 0.5, 0.6, 10, 20, 30, 40])
-ax1.set_yticklabels([0.3, 0.4, 0.5, 0.6, 10, 20, 30, 40], fontsize=font_size)
+ax1.set_yticks([0.05, 0.1, 0.5, 0.6, 0.8, 1, 30, 40])
+ax1.set_yticklabels([0.05, 0.1, 0.5, 0.6, 0.8, 1, 30, 40], fontsize=font_size)
 ax1.set_ylabel("acc", fontsize=font_size)
 
 l1 = ax1.plot(
