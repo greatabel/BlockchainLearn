@@ -19,4 +19,5 @@ flask-cors
 Flask-Login
 flask_sqlalchemy
 requests
+protobuf==3.20.1
 tensorflow==2.8.0
