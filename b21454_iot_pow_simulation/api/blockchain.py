@@ -7,7 +7,6 @@ from api.schema.block import BlockSchema
 
 from termcolor import colored, cprint
 
-
 blockchain_api = Blueprint("blockchain", __name__)
 
 
