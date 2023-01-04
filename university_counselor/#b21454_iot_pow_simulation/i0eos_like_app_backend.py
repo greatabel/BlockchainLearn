@@ -6,7 +6,7 @@ from api.blockchain import blockchain_api
 from api.miner import miner_api
 from api.transaction import transaction_api
 from api.demo_simulation import demo_simulation_api
-# from api.dpos_simulation import dpos_blockchain_api
+from api.dpos_simulation import dpos_blockchain_api
 
 from argparse import ArgumentParser
 
@@ -32,7 +32,7 @@ eos_like_app.register_blueprint(transaction_api, url_prefix="/api/transaction")
 eos_like_app.register_blueprint(demo_simulation_api, url_prefix="/api/demo_simulation")
 
 # dpos
-# eos_like_app.register_blueprint(dpos_blockchain_api, url_prefix="/api/dpos")
+eos_like_app.register_blueprint(dpos_blockchain_api, url_prefix="/api/dpos")
 
 if __name__ == "__main__":
     print("EOS Like Blockchain is running...")
