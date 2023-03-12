@@ -4,17 +4,18 @@ import matplotlib.pyplot as plt
 from i1common import get_acc_loss_by_conf
 
 
-central_acc1, centralized_loss1 = get_acc_loss_by_conf("conf_centralized1_1.json.pkl")
-central_acc2, centralized_loss2 = get_acc_loss_by_conf("conf_centralized1_2.json.pkl")
-central_acc3, centralized_loss3 = get_acc_loss_by_conf("conf_centralized1_3.json.pkl")
+
+hierarchical_federate_acc1, centralized_loss1 = get_acc_loss_by_conf("conf_cifar.json.pkl")
+central_acc2, centralized_loss2 = get_acc_loss_by_conf("conf_fashion.json.pkl")
+central_acc3, centralized_loss3 = get_acc_loss_by_conf("conf_mnist.json.pkl")
 federate_acc1, federate_loss1 = get_acc_loss_by_conf("conf_f5.json.pkl")
 federate_acc2, federate_loss2 = get_acc_loss_by_conf("conf_f10.json.pkl")
 
 print("#" * 30)
-print(central_acc1)
+print(hierarchical_federate_acc1)
 
-labels = ["client4", "client5"]
-men_means = [central_acc1[-2], central_acc1[-1]]
+labels = ["normal_hearchical3", "more_hearchical5"]
+men_means = [hierarchical_federate_acc1[-2], hierarchical_federate_acc1[-1]]
 women_means = [central_acc2[-2], central_acc2[-1]]
 f_means = [federate_acc1[-2], federate_acc1[-1]]
 
@@ -26,9 +27,9 @@ x = np.arange(len(labels))  # the label locations
 width = 0.35  # the width of the bars
 
 fig, ax = plt.subplots()
-rects1 = ax.bar(x - width / 3, men_means, width, label="central_acc1")
-rects2 = ax.bar(x, f2_means, width, label="federate_acc2")
-rects3 = ax.bar(x + width / 3, f_means, width / 2, label="federate_acc1")
+rects1 = ax.bar(x - width / 3, men_means, width, label="hierarchical_federate_cifar_acc1")
+rects2 = ax.bar(x, f2_means, width, label="federate_acc_fashion_acc1")
+rects3 = ax.bar(x + width / 3, f_means, width / 2, label="federate_minist_acc1")
 
 # Add some text for labels, title and custom x-axis tick labels, etc.
 ax.set_ylabel("Scores")
@@ -52,7 +53,7 @@ marker_size = 14
 
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 4))
-line_labels = ["central1", "central2", "central3", "federate1"]
+line_labels = ["hierarchical_federate_cifar1", "hierarchical_federate_fashion2", "hierarchical_federate_minist3", "normal-federate1"]
 ax1.set_xlabel("step", fontsize=font_size)
 ax1.set_xticks(range(20))
 # ax1.set_xticklabels(["0","-3","-5","-7","-10","-12","-15","-17","-20"], fontsize=font_size)
@@ -62,7 +63,7 @@ ax1.set_yticks([0.3, 0.4, 0.5, 0.6, 10, 20, 30, 40])
 ax1.set_yticklabels([0.3, 0.4, 0.5, 0.6, 10, 20, 30, 40], fontsize=font_size)
 ax1.set_ylabel("acc", fontsize=font_size)
 
-l1 = ax1.plot(central_acc1, markersize=marker_size, linestyle="--", linewidth=3,label=line_labels[0])
+l1 = ax1.plot(hierarchical_federate_acc1, markersize=marker_size, linestyle="--", linewidth=3,label=line_labels[0])
 l2 = ax1.plot(central_acc2, marker="v", markersize=marker_size,label=line_labels[1])
 l3 = ax1.plot(central_acc3, marker="o", markersize=marker_size,label=line_labels[2])
 l4 = ax1.plot(federate_acc1, marker="*", markersize=marker_size, label=line_labels[3])

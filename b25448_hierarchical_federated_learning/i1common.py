@@ -41,12 +41,6 @@ def get_acc_loss_by_conf(conf):
     return acc, loss
 
 
-if __name__ == "__main__":
-    get_acc_loss_by_conf("conf_centralized1_1.json.pkl")
-    get_acc_loss_by_conf("conf_centralized1_2.json.pkl")
-    get_acc_loss_by_conf("conf_centralized1_3.json.pkl")
-    get_acc_loss_by_conf("conf_f5.json.pkl")
-    get_acc_loss_by_conf("conf_f10.json.pkl")
 
 
 
@@ -133,5 +127,11 @@ def federated_learning(data, num_clusters, num_nodes):
     cluster_assignments = jonker(data, global_centroids)
 
     return cluster_assignments
+
+
+if __name__ == "__main__":
+    get_acc_loss_by_conf("conf_cifar.json.pkl")
+    get_acc_loss_by_conf("conf_fashion.json.pkl")
+    get_acc_loss_by_conf("conf_mnist.json.pkl")
 
 

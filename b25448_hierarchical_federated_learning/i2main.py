@@ -44,9 +44,9 @@ if __name__ == '__main__':
 
 	# train_datasets, eval_datasets = datasets.get_dataset("./data/", conf["type"])
 	train_datasets, eval_datasets = datasets.get_dataset("./data/", conf["type"])
-	
-	train_datasets = scale_dataset(train_datasets, 0.01)
-	eval_datasets = scale_dataset(eval_datasets, 0.01)
+
+	# train_datasets = scale_dataset(train_datasets, 1.01)
+	# eval_datasets = scale_dataset(eval_datasets, 1.01)
 
 	print('-'*10)
 	server = Server(conf, eval_datasets)
