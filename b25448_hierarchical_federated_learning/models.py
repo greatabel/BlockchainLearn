@@ -9,7 +9,7 @@ def get_model(name="vgg16", pretrained=True):
 		model = models.resnet18(pretrained=pretrained)
 	elif name == "resnet50":
 		model = models.resnet50(pretrained=pretrained)	
-		print('resnet50')
+		# print('resnet50')
 		# # Modify the last layer to match the number of classes in MNIST dataset
 		# num_ftrs = model.fc.in_features
 		# model.fc = torch.nn.Linear(num_ftrs, 10)

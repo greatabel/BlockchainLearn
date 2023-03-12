@@ -1,7 +1,27 @@
 import numpy as np
 from scipy.optimize import linear_sum_assignment
-from sklearn.metrics import adjusted_rand_score
-import matplotlib.pyplot as plt
+import pickle
+
+
+def get_acc_loss_by_conf(conf):
+    print("\nconf=", conf, "\n")
+    print("-" * 20, "\n")
+
+    fp = open("statistical_plot_data/" + conf, "rb")
+    shared = pickle.load(fp)
+    acc = shared["acc"]
+    loss = shared["loss"]
+    print("GUI back thread is receving:", acc, "\n", "loss=", loss)
+    return acc, loss
+
+
+if __name__ == "__main__":
+    get_acc_loss_by_conf("conf_centralized1_1.json.pkl")
+    get_acc_loss_by_conf("conf_centralized1_2.json.pkl")
+    get_acc_loss_by_conf("conf_centralized1_3.json.pkl")
+    get_acc_loss_by_conf("conf_f5.json.pkl")
+    get_acc_loss_by_conf("conf_f10.json.pkl")
+
 
 
 def k_means(data, k, max_iter=100):
@@ -88,38 +108,4 @@ def federated_learning(data, num_clusters, num_nodes):
 
     return cluster_assignments
 
-
-
-from sklearn.datasets import load_iris
-
-def main():
-    # Load the iris dataset
-    iris = load_iris()
-    data = iris.data
-
-    # Run federated learning with 4 nodes and 5 clusters
-    num_nodes = 4
-    num_clusters = 5
-    cluster_assignments = federated_learning(data, num_clusters, num_nodes)
-
-
-    # Print the cluster assignments
-    print("Cluster assignments:", cluster_assignments)
-
-    # Evaluate the clustering performance
-    true_labels = iris.target
-    ari = adjusted_rand_score(true_labels, cluster_assignments)
-    print("Adjusted Rand Index:", ari)
-
-    # Visualize the clustering results
-    plt.figure(figsize=(8, 6))
-    plt.scatter(data[:, 0], data[:, 1], c=cluster_assignments)
-    plt.title("Federated K-Means Clustering Results")
-    plt.xlabel("Feature 1")
-    plt.ylabel("Feature 2")
-    plt.show()
-
-
-if __name__ == '__main__':
-    main()
 

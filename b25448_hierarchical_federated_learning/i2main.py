@@ -8,11 +8,12 @@ from server import *
 from client import *
 import models, datasets
 
+from i1common import *
 	
 
 if __name__ == '__main__':
 
-	parser = argparse.ArgumentParser(description='Federated Learning')
+	parser = argparse.ArgumentParser(description='hierarchical_federated_learning')
 	parser.add_argument('-c', '--conf', dest='conf')
 	args = parser.parse_args()
 	
@@ -20,7 +21,17 @@ if __name__ == '__main__':
 	with open(args.conf, 'r') as f:
 		conf = json.load(f)	
 	
-	
+
+	# Generate some random data
+	data = np.random.rand(1000, 2)
+
+	# Run federated learning with 4 nodes and 5 clusters
+	num_nodes = 4
+	num_clusters = 5
+	cluster_assignments = federated_learning(data, num_clusters, num_nodes)
+
+
+
 	train_datasets, eval_datasets = datasets.get_dataset("./data/", conf["type"])
 	print('-'*10)
 	server = Server(conf, eval_datasets)

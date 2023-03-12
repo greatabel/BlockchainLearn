@@ -20,12 +20,11 @@ pip3 install --upgrade -r requirements.txt
 5.（可选，非必须）
 启动1个命令行窗口，在terminal分别按顺序执行下面不同的命令
 （头4个可以开4个窗口同时执行，也可以挨个按顺序执行，甚至可以不执行，因为我已经执行过了，缓存了中间结果）
-python3 i2main.py -c  utils/conf_mnist.json
 
-python3 i2main.py -c  utils/conf_centralized1_2.json
+
 
 python3 i2main.py -c  utils/conf_cifar.json
 
 python3 i2main.py -c  utils/conf_fashion.json
 
-6
+python3 i2main.py -c  utils/conf_mnist.json (mnist osx 上有些bug)

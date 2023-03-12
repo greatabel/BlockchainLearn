@@ -6,11 +6,11 @@
 	
 	"type" : "cifar",
 	
-	"global_epochs" : 20,
+	"global_epochs" : 5,
 	
 	"local_epochs" : 3,
 	
-	"k" : 5,
+	"k" : 1,
 	
 	"batch_size" : 32,
 	
