@@ -1,6 +1,32 @@
 import numpy as np
 from scipy.optimize import linear_sum_assignment
 import pickle
+import argparse, json
+import datetime
+import os
+import logging
+import torch, random
+
+
+
+def scale_dataset(dataset, scale_factor):
+    """
+    Scales a PyTorch dataset by a given factor.
+
+    Args:
+        dataset: PyTorch dataset.
+        scale_factor: Scaling factor. Must be between 0 and 1.
+
+    Returns:
+        Scaled PyTorch dataset.
+    """
+    assert 0 <= scale_factor <= 1, "Scale factor must be between 0 and 1."
+
+    num_samples = int(len(dataset) * scale_factor)
+    indices = list(range(len(dataset)))
+    scaled_indices = indices[:num_samples]
+
+    return torch.utils.data.Subset(dataset, scaled_indices)
 
 
 def get_acc_loss_by_conf(conf):
