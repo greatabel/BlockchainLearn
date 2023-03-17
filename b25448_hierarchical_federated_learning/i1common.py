@@ -8,7 +8,6 @@ import logging
 import torch, random
 
 
-
 def scale_dataset(dataset, scale_factor):
     """
     Scales a PyTorch dataset by a given factor.
@@ -41,9 +40,6 @@ def get_acc_loss_by_conf(conf):
     return acc, loss
 
 
-
-
-
 def k_means(data, k, max_iter=100):
     centroids = data[np.random.choice(len(data), k, replace=False)]
     for _ in range(max_iter):
@@ -51,9 +47,8 @@ def k_means(data, k, max_iter=100):
         cluster_assignments = np.argmin(distances, axis=1)
         for i in range(k):
             centroids[i] = data[cluster_assignments == i].mean(axis=0)
-    print('k_means :', centroids)
+    print("k_means :", centroids)
     return centroids
-
 
 
 def ring_allreduce(data, num_nodes):
@@ -61,26 +56,26 @@ def ring_allreduce(data, num_nodes):
     chunk_size = len(data) // num_nodes
 
     # Split the data into chunks
-    chunks = [data[i:i+chunk_size] for i in range(0, len(data), chunk_size)]
+    chunks = [data[i : i + chunk_size] for i in range(0, len(data), chunk_size)]
 
     # Initialize the send and receive buffers
     send_buf = np.zeros_like(data)
     recv_buf = np.zeros_like(data)
 
     # Copy the data to the send buffer
-    send_buf[:len(chunks[0])] = chunks[0]
+    send_buf[: len(chunks[0])] = chunks[0]
 
     # Perform the ring allreduce
     for i in range(num_nodes - 1):
         # Send the current chunk to the next node
         dest = (i + 1) % num_nodes
-        send_data = send_buf[i*chunk_size:(i+1)*chunk_size]
+        send_data = send_buf[i * chunk_size : (i + 1) * chunk_size]
         recv_data = np.zeros_like(send_data)
         # Simulate the send and receive operations
         recv_data = chunks[dest] + send_data
         send_data = recv_data
         # Copy the received data to the receive buffer
-        recv_buf[dest*chunk_size:(dest+1)*chunk_size] = recv_data
+        recv_buf[dest * chunk_size : (dest + 1) * chunk_size] = recv_data
 
     # Copy the final result from the receive buffer to the send buffer
     send_buf = recv_buf
@@ -89,27 +84,28 @@ def ring_allreduce(data, num_nodes):
     for i in range(num_nodes - 1):
         # Send the current chunk to the next node
         dest = (i + 1) % num_nodes
-        send_data = send_buf[i*chunk_size:(i+1)*chunk_size]
+        send_data = send_buf[i * chunk_size : (i + 1) * chunk_size]
         recv_data = np.zeros_like(send_data)
         # Simulate the send and receive operations
         recv_data = chunks[dest] + send_data
         send_data = recv_data
         # Copy the received data to the receive buffer
-        recv_buf[dest*chunk_size:(dest+1)*chunk_size] = recv_data
+        recv_buf[dest * chunk_size : (dest + 1) * chunk_size] = recv_data
 
     # Compute the final result
     result = np.sum(recv_buf, axis=0)
-    print('result', '#'*20,result)
+    print("result", "#" * 20, result)
     return result
 
 
 def jonker(data, centroids):
-    print('jonker')
+    print("jonker")
     cluster_assignments = np.zeros(len(data), dtype=int)
     distances = np.linalg.norm(data[:, None] - centroids, axis=2)
     row_idx, col_idx = linear_sum_assignment(distances)
     cluster_assignments[row_idx] = col_idx
     return cluster_assignments
+
 
 def federated_learning(data, num_clusters, num_nodes):
     # Split the data into num_nodes partitions
@@ -133,5 +129,3 @@ if __name__ == "__main__":
     get_acc_loss_by_conf("conf_cifar.json.pkl")
     get_acc_loss_by_conf("conf_fashion.json.pkl")
     get_acc_loss_by_conf("conf_mnist.json.pkl")
-
-
