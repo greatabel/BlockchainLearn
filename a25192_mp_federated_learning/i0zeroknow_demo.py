@@ -29,8 +29,8 @@ if b == 0:
     result = pk.verify(sig, msg)
 else:
     msg = b"Hello, world!"
-    sig = pk.sign(msg, sk)
-    result = sk.verifies(sig, msg)
+    sig = sk.sign(msg)  # 修改这一行，使用 sk 对象进行签名
+    result = pk.verify(sig, msg)  # 使用 pk 对象进行验证
 
 if result:
     print("Verification succeeded")
