@@ -15,7 +15,7 @@ def verify():
     data = request.get_json()
     b = data["b"]
     msg = b"Hello, world!"
-    
+
     if b == 0:
         signature = base64.b64decode(data["signature"])
         result = pk.verify(signature, msg)
@@ -28,6 +28,7 @@ def verify():
         return jsonify({"result": "Verification succeeded"})
     else:
         return jsonify({"result": "Verification failed"}), 400
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

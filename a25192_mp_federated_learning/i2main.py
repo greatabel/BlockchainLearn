@@ -17,7 +17,6 @@ from ecdsa import SigningKey, VerifyingKey, SECP256k1
 from i1common import *
 
 
-
 # 加载私钥和公钥
 with open("private_key.pem", "rb") as f:
     sk = SigningKey.from_pem(f.read())
@@ -34,24 +33,20 @@ if __name__ == "__main__":
     with open(args.conf, "r") as f:
         conf = json.load(f)
 
-
-
     zeroknow_flag = False
     try:
         # 对消息进行签名
         msg = b"Hello, world!"
         sig = sk.sign(msg)
 
-
         # 调用验证服务
         url = "http://localhost:5000/verify"
         data = {"b": 0, "signature": base64.b64encode(sig).decode("utf-8")}
         response = requests.post(url, json=data)
-        
 
         if response.status_code == 200:
             print("Verification succeeded")
-            zeroknow_flag  = True
+            zeroknow_flag = True
             # 在这里添加需要在验证成功后执行的代码
         else:
             print("Verification failed")
@@ -65,7 +60,7 @@ if __name__ == "__main__":
             attrs=["reverse", "blink"],
         )
         print(text)
-        
+
         # train_datasets, eval_datasets = datasets.get_dataset("./data/", conf["type"])
         train_datasets, eval_datasets = datasets.get_dataset("./data/", conf["type"])
 

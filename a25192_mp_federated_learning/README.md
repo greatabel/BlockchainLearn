@@ -1,0 +1,39 @@
+使用python3+pip3部署方案，步骤1～4如下：
+
+1.
+安装python3.6 以上版本
+
+2. 
+安装pip3 
+
+3.
+（可选，非必须）（创建python3虚拟目录，隔绝不同版本库之间相互影响）
+https://docs.python.org/zh-cn/3/tutorial/venv.html
+
+
+4.
+terminal底下进入工程目录下，在requirements.txt同级目录下运行：
+pip3 install --upgrade -r requirements.txt
+
+
+
+5.（可选，非必须, 最好不用跑，要非常之久)
+启动1个命令行窗口，在terminal分别按顺序执行下面不同的命令
+（头4个可以开4个窗口同时执行，也可以挨个按顺序执行，甚至可以不执行，因为我已经执行过了，缓存了中间结果）
+
+使用一个窗口：
+python3 i5flask_zeroknow.py
+
+使用另一个窗口
+python3 i2main.py -c  utils/conf_cifar.json
+
+
+
+
+# --- requirements ----
+
+我的方案就是这块没变化，联邦学习工程应该是基于：tensorflow / torch/ numpy , 
+可视化是pandas + matplot ，数据缓存在pickle和json，这块可能不用fedavg框架，
+自己用tf和torch写一套，因为更熟悉，方便这块结果和web系统打通，web系统启动部分和基于多方安全计算的算法验证demo链接起来；
+然后多方安全验证部分（就是用秘密分享，另一个算法估计选择同台加密，不过还没做demo，密码分析是做了），
+我们结合是在一套web系统中：web系统的启动，认证阶段，我们做多方安全认证的mock实验，通过了认真后，才能进入联邦机器学习部分的代码系统
