@@ -20,7 +20,7 @@ Click
 itsdangerous
 Jinja2
 MarkupSafe
-numpy==1.18
+numpy==1.22.0
 Pillow
 Werkzeug
 Flask-Docs
