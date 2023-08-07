@@ -1,7 +1,0 @@
-numpy==1.21.5
-matplotlib==3.5.1
-pandas
-sklearn
-Flask
-cryptography==36.0.1
-termcolor
